@@ -2,7 +2,10 @@
 
 This repo holds research notes on memory management for continual learning.
 
-- [`ideas/memory-management-ideas.md`](ideas/memory-management-ideas.md): a shortlist of 17 low-GPU project ideas.
+- [`ideas/survey-refinement.md`](ideas/survey-refinement.md): the current version of the shortlist (v2).
+  - It refines v1 using Hu et al.'s agent-memory survey (arXiv 2512.13564): a re-ranked portfolio, the survey claims each pilot tests, and refined cards.
+  - [`ideas/survey-digest.md`](ideas/survey-digest.md) records what was taken from the survey and from which source.
+- [`ideas/memory-management-ideas.md`](ideas/memory-management-ideas.md): v1 of the shortlist, with 17 low-GPU project ideas.
   - It gives a ranked table, where to start, four research arcs, and one card per idea.
   - Each card covers the go/no-go experiment, the kill criteria, and the closest prior work.
 - [`ideas/full-plans.md`](ideas/full-plans.md): the full plan for each idea, covering datasets, checkpoints, baselines, metrics, compute and risks.

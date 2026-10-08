@@ -1,5 +1,7 @@
 # Memory-management ideas for continual learning: a low-GPU shortlist
 
+> **Update (2026-10-08):** a second pass using the Hu et al. agent-memory survey refines this list. It changes tiers, merges some cards and adds four ideas; see [survey-refinement.md](survey-refinement.md). This file is kept as v1.
+
 *Brainstorm dated 2026-10-08. It is a companion to the doc [Memory methods for continual learning: the big picture](https://claude.ai/artifact/JnG7owgYpsPUUfPsUhjnCr).*
 
 Seventeen project ideas made the cut. Each fits in roughly 30–170 GPU-hours on one GPU for a full paper. Most give a go/no-go answer within two weeks for 20 GPU-hours or less; #8 needs 25–30 GPU-hours and #10 about 25 plus a CPU week. #8 and #15 are planned around 8B models, so they stay low-GPU only if moved to API-only models. The three best starting points are listed below.
