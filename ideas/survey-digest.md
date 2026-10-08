@@ -83,3 +83,4 @@ Listed works directly relevant to the user's shortlist:
 - It has a complexity bias: it may undervalue simple brute-force baselines.
 - It glosses over keeping a parametric memory (weights) synchronized with a token-level memory (DB) as both change.
 - It says little about latency and engineering cost.
+- Latent memory (activations, KV cache) may be "just state or caching", not memory in the cognitive sense. This is the study note's own counterargument, not the survey's.
