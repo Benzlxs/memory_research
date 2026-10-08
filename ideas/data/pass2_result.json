@@ -1,0 +1,1213 @@
+{
+ "rechecks": [
+  {
+   "plan_no": 9,
+   "closest_work": [
+    {
+     "title": "Dual-Layer Agentic Memory with Fast Write Routing and Slow Consolidation (Wenzhi Li et al.)",
+     "venue_year": "arXiv Aug 2026 (2608.22215)",
+     "url": "https://arxiv.org/pdf/2608.22215",
+     "overlap": "The closest scoop risk. A fast router labels incoming knowledge non-write / write-new / write-update, depending on whether the model already answers correctly without memory. A slow write-back then moves high-value external memories into the weights by SFT. A 1.7B/8B cascade reportedly prunes up to 68% of redundant external memory while keeping more than 98% of store-everything QA EM. This already covers 'consolidate into weights, then shrink the store, scored by retention against store size'. Its pruning gate is no-cue answerability, and the store keeps either full text or nothing. As far as the snippets show, it has no address or pointer entries, no delayed re-test under later sequential writes, and no hidden-vs-erased analysis. Known from search snippets only."
+    },
+    {
+     "title": "Can a Language Model Learn Facts Continually in Its Weights? (Charles O'Neill, Baseten)",
+     "venue_year": "arXiv Jul 2026 (2607.11020)",
+     "url": "https://arxiv.org/pdf/2607.11020",
+     "overlap": "This is the plan's premise paper, and its ID is now VERIFIED. It writes invented facts into Qwen3 models sequentially. After 20 writes, retention is 1% for bare statements and 46% for broad restatements. Forgotten facts keep most of the log-prob their write added, and wrong answers mostly name the most recently written fact (redirection). Supplying the fact in context restores 77-80%. No intervention kept facts reachable through weights alone. Caveats that matter for the plan: (a) it reports SLOW relearning, the opposite of savings, which argues against 'merely hidden'; (b) it ran a cued-question re-test (study 3/3 vs bare 0/54) but excluded it because the cue questions share their contrast form with the training data. The plan's cue-address idea directly answers this paper's open problem, but it must avoid the same template confound."
+    },
+    {
+     "title": "EVAF: A Test-Retest Protocol for Selective Parametric Consolidation",
+     "venue_year": "arXiv Jun 2026 (2606.29916)",
+     "url": "https://arxiv.org/pdf/2606.29916",
+     "overlap": "A dual sigmoid write gate (surprise/valence) for LoRA consolidation, plus a falsifiable test-retest harness that detects parametric writes, with replay-retention (anti-forgetting) checks. 'Test-retest gating of what was consolidated' therefore already exists. The domain differs (persona and goal tendencies, not atomic facts), and the protocol is not used to delete text from an external store."
+    },
+    {
+     "title": "Memory Depth, Not Memory Access: Selective Parametric Consolidation for Long-Running Language Agents (Haoliang Han)",
+     "venue_year": "arXiv Jun 2026 (2606.26806)",
+     "url": "https://arxiv.org/pdf/2606.26806",
+     "overlap": "Compares a retrieval index with selective parametric consolidation (EVAF LoRA) on GPT-2/TinyLlama/Mistral-7B. Retrieval wins on short-fact recall (0.956-0.973), while consolidation wins on persistence after context unload. It names stale-memory invalidation and delete/update validity as unresolved. This is the same store-vs-weights framing on small models, but the retrieval index is kept intact, with no eviction and no address."
+    },
+    {
+     "title": "Continual Memorization of Factoids in Language Models (REMIX)",
+     "venue_year": "arXiv Nov 2024 (2411.07175)",
+     "url": "https://arxiv.org/html/2411.07175",
+     "overlap": "Studies continual memorization of key-value factoids under later fine-tuning and finds that randomly generated key-value strings are the MOST susceptible to forgetting. This directly threatens the plan's random 4-token code address: the code-to-fact binding may be the first thing a later write erases. It also has a selective-recall probe given two keys."
+    },
+    {
+     "title": "TokMem: One-Token Procedural Memory for Large Language Models",
+     "venue_year": "arXiv Oct 2025 (2510.00444)",
+     "url": "https://arxiv.org/pdf/2510.00444",
+     "overlap": "Gives each memory item (a procedure) its own dedicated token, parameter-isolated from the backbone, so items can be added without interference. This is mechanistically the nearest thing to a per-item address token. The differences: it stores skills, the knowledge lives in the token rather than in shared weights it points into, and there is no text eviction."
+    },
+    {
+     "title": "When Continual Learning Moves to Memory: A Study of Experience Reuse in LLM Agents",
+     "venue_year": "arXiv Apr 2026 (2604.27003)",
+     "url": "https://www.emergentmind.com/papers/2604.27003",
+     "overlap": "Cited ID VERIFIED. Shows that with a finite context, old and new experiences compete at retrieval (ALFWorld/BabyAI), so external memory reshapes the continual-learning problem rather than solving it. This motivates the fixed-budget retrieval baseline. It does not consolidate into weights."
+    },
+    {
+     "title": "Unveiling and Addressing Pseudo Forgetting in Large Language Models",
+     "venue_year": "arXiv Nov 2024 (2411.11932)",
+     "url": "https://arxiv.org/pdf/2411.11932",
+     "overlap": "Shows that tasks 'forgotten' after sequential learning can be reactivated by semantically meaningless suffixes or GCG-optimized prompts. Generic prompts can therefore recover hidden capability, which makes the plan's shuffled-code and generic-prime controls essential. An optimized-suffix control should be added."
+    },
+    {
+     "title": "Auto-Dreamer: Learning Offline Memory Consolidation for Language Agents",
+     "venue_year": "arXiv May 2026 (2605.20616)",
+     "url": "https://arxiv.org/pdf/2605.20616",
+     "overlap": "A learned offline consolidator (GRPO) that replaces regions of an external memory bank with compact abstractions, using a 12x smaller active bank. This is store-to-store consolidation and pruning, not store-to-weights, and it should be cited for the 'shrink the store' economics."
+    }
+   ],
+   "queries_run": [
+    "arXiv 2607.11020",
+    "consolidate RAG memory into LLM weights then evict text from external store 2026 (extended)",
+    "arXiv 2607.07847 sequential knowledge injection protocol Harrington",
+    "EVAF test-retest protocol selective parametric consolidation",
+    "fine-tuned LLM forgotten facts recovered by cue prefix hidden not erased sequential fine-tuning 2026",
+    "hippocampal indexing theory language model external memory stores pointers to parametric knowledge index tokens",
+    "\"Can a Language Model Learn Facts Continually in Its Weights?\"",
+    "\"Dual-Layer Agentic Memory with Fast Write Routing and Slow Consolidation\"",
+    "arXiv 2604.27003 external memory finite context old and new memories compete retrieval continual learning",
+    "language model trained on facts tagged with identifier tokens, prompting with the identifier recalls the fact after continual fine-tuning (extended)",
+    "\"Memory Depth, Not Memory Access\" selective parametric consolidation long-running language agents",
+    "Auto-Dreamer 2605.20616 offline consolidation external memory into weights prune memory after consolidation"
+   ],
+   "verdict": "partially_novel",
+   "differentiation": "The plan is not scooped, but its framing is weaker than it claims. Dual-Layer Agentic Memory (2608.22215, Aug 2026) already consolidates external memories into a small LM's weights by SFT and prunes the store (up to 68% removed at more than 98% EM). Its gate is no-cue answerability, so the store keeps either the text or nothing. EVAF (2606.29916) already gates parametric consolidation with a test-retest harness. The claims 'nobody measures whether a consolidated fact survives once its text is gone' and 'self-test gating is new' should both be dropped. What remains new, as far as 12 searches show, has three parts. (1) A third store state between keeping the text and evicting it: keep only a short ADDRESS that re-cues a fact that is hidden in the weights but not reachable. This targets exactly the regime 2607.11020 documents (log-prob retained, redirection to recent facts, 77-80% recovered only with the full text in context, no weights-only fix) and its open problem. (2) A DELAYED, address-cued self-test as the eviction gate, run after later writes have interfered, compared against Dual-Layer's no-cue gate. (3) A controlled comparison of address types (random code, NL stub, soft prompt) against shuffled-code, format-prime and optimized-suffix controls, with retention per hot-store token and per context token under retrieval competition (2604.27003). No search found per-fact ID cues used as input pointers to recover facts after sequential fine-tuning. REMIX (2411.07175) suggests random keys are the most forgettable, so the random-code arm may well lose to NL stubs. That outcome is still publishable inside the comparison.",
+   "revised_title": "Keep the Address, Evict the Text: Cued Self-Test Eviction for Facts Hidden in a Small LM's Weights",
+   "revised_one_liner": "After facts are fine-tuned into a <=1.5B LM, each store entry is downgraded from full text to a short address that re-cues the hidden weight copy. Text is deleted only when a delayed, address-cued self-test passes. The result is compared at matched hot-store and context tokens against Dual-Layer-style no-cue pruning, full-text RAG, LLMLingua-2 and replay.",
+   "revision_note": "1. Citations. 2607.11020 is verified: Charles O'Neill (Baseten), Jul 2026, Qwen3 models; it reports 77-80% recovery with the fact in context and redirection errors to the latest fact. Mark it verified and fix the attribution. 2604.27003 is also verified ('When Continual Learning Moves to Memory', Apr 2026). 'Harrington et al. 2607.07847' could NOT be found by ID, author or topic. Remove it, or verify it by hand before citing; do not build the gap statement on it. 2. Premise tension. 2607.11020 also reports SLOW relearning (anti-savings), which argues against 'merely hidden'. It ran a cued-question probe but excluded it for template confound. The plan's relearning-savings validation should therefore expect weak savings: report the cue-recovery vs relearning correlation as an open empirical question, not as a validation step, and keep self-test, evaluation and training templates strictly disjoint. Consider adding Qwen3-0.6B/1.7B-Base as main models so the setup is directly comparable with 2607.11020. 3. Rewrite the gap statement. Dual-Layer Agentic Memory (2608.22215) already does store-to-weights consolidation plus store pruning at near-full EM. The contribution is not 'consolidate then evict'. It is (a) the address-only intermediate state for facts that are hidden, not erased; (b) a delayed cued gate against an immediate or no-cue gate; (c) per-token Pareto economics under retrieval competition. Drop the claim that no protocol measures post-eviction reachability. 4. Self-test gating. Cite EVAF (2606.29916) and Memory Depth (2606.26806) as prior test-retest and consolidation-gating work, and narrow the claim to an address-cued, delayed gate for text eviction. 5. Random codes. REMIX (2411.07175) finds random key strings are the most forgettable. Pre-register that NL stubs may win, and report code-binding survival per episode. 6. Controls. Pseudo-Forgetting (2411.11932) shows meaningless or GCG suffixes reactivate hidden ability, so add an optimized-generic-suffix control next to the shuffled-code and format-prime controls. 7. Cut scope to stay under about 150 GPU-hours: drop the EvolvingQA arm unless the pilot is GO, and keep Llama-3.2-1B as a single-seed check.",
+   "added_baselines": [
+    "Dual-Layer-style no-cue pruning gate (2608.22215): after SFT write-back, evict the text iff the model answers with NO cue; keep the full text otherwise (no address state)",
+    "Immediate cued-gate vs delayed cued-gate (d=0 vs d>=1), to isolate the value of re-testing after interference",
+    "TokMem-style per-fact dedicated memory token trained with the backbone frozen (2510.00444), as a parameter-isolated alternative to an address into shared weights",
+    "Optimized generic suffix (GCG or a soft prompt trained on a disjoint fact set) as a non-addressing recovery control (per Pseudo Forgetting, 2411.11932)",
+    "EVAF-style surprise-gated LoRA consolidation (2606.29916) as an alternative write-selection policy, if cheap to reproduce",
+    "Auto-Dreamer-style store-only compaction (summarise/merge entries, no weight writes) at matched hot-store tokens (2605.20616)"
+   ],
+   "recommend": "pursue_with_pivot"
+  },
+  {
+   "plan_no": 10,
+   "closest_work": [
+    {
+     "title": "BetaEdit: Null-Space Constrained Sequential Model Editing",
+     "venue_year": "IJCAI 2026 (arXiv 2605.09285)",
+     "url": "https://arxiv.org/pdf/2605.09285",
+     "overlap": "Biggest new threat, and also the strongest new motivation. It analyses why 'history-aware' updates keep null-space editors working over long horizons, and builds C^(t) from the original keys plus the keys of all earlier edits, projecting onto its null space. It is the hard-projector version of AlphaEdit's cache_c. The snippets show nothing about superseded or duplicate keys. Under BetaEdit a revised subject's key may sit almost entirely inside the protected span, so revisions could be blocked outright rather than harmonically attenuated. It must be a baseline and a target of the diagnosis."
+    },
+    {
+     "title": "OrthoEdit (TACL 2026)",
+     "venue_year": "TACL 2026",
+     "url": "https://aclanthology.org/2026.tacl-1.51.pdf",
+     "overlap": "Recursively builds a shared null space that removes the directions of all previously edited keys, which is the same protected-set bookkeeping. The plan's supersession issue applies here in hard-projection form. Snippets do not mention revisions or garbage keys."
+    },
+    {
+     "title": "EvoEdit: sequential null-space alignment",
+     "venue_year": "arXiv Oct 2025 (2510.13851)",
+     "url": "https://arxiv.org/pdf/2510.13851v2",
+     "overlap": "Projects edits into the null space of both the original knowledge and previously modified knowledge, so it is another protected-set editor exposed to stale-key protection. No supersession handling appears in the snippets."
+    },
+    {
+     "title": "Serial Lifelong Editing via Mixture of Knowledge Experts (sLKE benchmark)",
+     "venue_year": "ACL 2025 (long 1492)",
+     "url": "https://aclanthology.org/2025.acl-long.1492",
+     "overlap": "Pre-empts the task framing. It states that lifelong editors fail to precisely overwrite outdated knowledge with the latest value, builds the sLKE benchmark where answers to the same concept are updated repeatedly, and proposes MoKE routing so that each update overwrites the old one. It gives no closed-form diagnosis of protected Gram or null-space keys, no downdate, and no live-facts scaling result."
+    },
+    {
+     "title": "Related Knowledge Perturbation Matters: Rethinking Multiple Pieces of Knowledge Editing in Same-Subject (S2RKE)",
+     "venue_year": "NAACL 2025 short (arXiv 2502.06868)",
+     "url": "https://arxiv.org/html/2502.06868v1",
+     "overlap": "Already reports that for MEMIT, same-subject keys have cosine similarity close to 1, and that the first edit's efficacy drops when a later edit shares its subject. The 'relation-independent subject key' observation is therefore not new. It covers different relations of one subject, not superseded revisions of one (s,r), and it neither treats protected-set editors nor offers a fix."
+    },
+    {
+     "title": "Beyond the Covariance Trap: Unlocking Generalization in Same-Subject Knowledge Editing (RoSE)",
+     "venue_year": "arXiv 2603.15518 (Mar 2026)",
+     "url": "https://arxiv.org/abs/2603.15518",
+     "overlap": "Blames the covariance constraint for same-subject editing failures, specifically weaker instruction and paraphrase generalization, and fixes this with isotropic alignment and hierarchical integration. It is batch-only and the authors call it unsuitable for sequential lifelong editing. It shares the 'the covariance term is the culprit' angle but not supersession or garbage collection."
+    },
+    {
+     "title": "PRISM Edit: One Vector for All Temporal Answers",
+     "venue_year": "arXiv 2607.11327 (Jul 2026)",
+     "url": "https://arxiv.org/abs/2607.11327",
+     "overlap": "Temporal editing where the new answer becomes current but the old one stays valid in historical contexts. It argues the edit site cannot discriminate time and optimises a single shared representation. It adds the TimeConflict/TIMECF benchmark (22,708 records over 24 relations). It competes with the plan on revision-chain and historical-recall evaluation and is the natural foil for 'GC discards history'."
+    },
+    {
+     "title": "Reproducibility Study of AlphaEdit",
+     "venue_year": "arXiv 2606.26783 (Jun 2026)",
+     "url": "https://arxiv.org/html/2606.26783v2",
+     "overlap": "Confirmed real (Ananth K S and Arya Hariharan). AlphaEdit is stable to 3,000 edits and degrades after about 5,000, protection is 'bounded rather than unconditional', the advantage does not carry over to newer model families, and a fluency-metric bug is reported. The snippets show no diagnosis of duplicate or superseded keys."
+    },
+    {
+     "title": "OneEdit: A Neural-Symbolic Collaboratively Knowledge Editing System",
+     "venue_year": "arXiv 2409.07497 (2024)",
+     "url": "https://arxiv.org/abs/2409.07497",
+     "overlap": "Confirmed. A controller uses a knowledge graph plus rollbacks to resolve knowledge conflicts, a system-level version of rollback-then-re-edit. It does not touch the protected-key cache."
+    },
+    {
+     "title": "Tracing and Reversing Edits in LLMs",
+     "venue_year": "ICLR 2026 (arXiv 2505.20819)",
+     "url": "https://arxiv.org/abs/2505.20819",
+     "overlap": "Reverses up to 94% of edits training-free, without the edit record. It is an alternative to ledger-based rollback of superseded deltas and a possible baseline for the rollback arm."
+    },
+    {
+     "title": "Lifelong Knowledge Editing requires Better Regularization (ENCORE)",
+     "venue_year": "arXiv 2502.01636 (2025)",
+     "url": "https://arxiv.org/pdf/2502.01636",
+     "overlap": "The competing explanation, weight-norm growth. The plan already includes a norm-matched control."
+    },
+    {
+     "title": "WilKE: Wise-Layer Knowledge Editor for Lifelong Knowledge Editing",
+     "venue_year": "Findings ACL 2024 (arXiv 2402.10987)",
+     "url": "https://arxiv.org/abs/2402.10987",
+     "overlap": "Confirmed real, but the snippets describe layer selection by pattern matching against 'toxicity buildup and flash'. No rollback mechanism appears, so the plan's 'OneEdit/WilKE-style delta rollback' attribution looks wrong for WilKE."
+    }
+   ],
+   "queries_run": [
+    "AlphaEdit sequential editing same fact edited multiple times stale keys null-space projection conflict (extended)",
+    "arXiv 2606.26783 AlphaEdit reproducibility",
+    "knowledge editing re-editing same subject relation multiple updates overwrite lifelong editing 2025 2026 arXiv",
+    "\"Beyond the Covariance Trap\" same-subject knowledge editing RoSE",
+    "\"Serial Lifelong Editing via Mixture of Knowledge Experts\" outdated knowledge replaced sLKE",
+    "BetaEdit null-space constrained sequential model editing 2605.09285",
+    "PRISM Edit \"One Vector for All Temporal Answers\" knowledge editing time",
+    "knowledge editing undo or retract previous edit sequential editing reversal rollback locate-then-edit superseded edit 2026 (extended)",
+    "OneEdit neural-symbolic knowledge editing coverage conflict rollback 2409.07497; WilKE 2402.10987",
+    "\"history-aware\" sequential knowledge editing null space previously edited keys cache covariance 2025 2026",
+    "knowledge editing benchmark facts updated repeatedly chain of updates same question multiple edits MEMIT AlphaEdit fail latest answer 2026",
+    "sequential model editing collapse number of edits vs unique facts duplicate edits same key interference closed-form analysis linear associative memory"
+   ],
+   "verdict": "partially_novel",
+   "differentiation": "Twelve searches turned up no work that (a) identifies superseded writes of a subject as garbage left in the protected set of AlphaEdit-family editors, (b) derives the resulting attenuation of revisions and the 'ghost' values they leave, (c) fixes this with an exact downdate ledger and compaction, or (d) shows that collapse scales with live facts rather than total writes. One search aimed squarely at closed-form analysis of duplicate keys versus unique facts found nothing. Several pieces around the idea are taken, though. The repeated-overwrite task and its failure ('cannot precisely overwrite outdated knowledge') come from the ACL 2025 sLKE/MoKE paper. Same-subject key cosine near 1 in MEMIT is reported by S2RKE (2502.06868). The covariance constraint has already been blamed for same-subject failures ('Covariance Trap', 2603.15518). History-aware protected-key null spaces have become the main line of sequential editing: BetaEdit (IJCAI 2026), OrthoEdit (TACL 2026), EvoEdit (2025). Temporal current-versus-history editing is covered by PRISM Edit (2607.11327). Rollback exists in OneEdit (system level) and in training-free edit reversal (2505.20819, ICLR 2026). The 2026 null-space wave widens the defensible delta. Those editors project every new update away from the span of all past edited keys, so a revised subject's new key, which is nearly identical to its old one, should be almost entirely blocked, not merely attenuated. The diagnosis therefore covers the whole family as the field's current best practice, and the fix is to remove the stale key from the protected span and recompute the projector, which no one appears to do.",
+   "revised_title": "Garbage in the Null Space: Superseded Keys Block Fact Revision in History-Aware Sequential Editors",
+   "revised_one_liner": "Protected-set editors (AlphaEdit, BetaEdit, OrthoEdit, EvoEdit, MEMIT_seq) keep defending every superseded write of a subject. Because subject keys are relation-independent, each revision is harmonically attenuated by soft Gram penalties and almost fully blocked by hard null-space projectors, and a ghost of the old value stays protected. A write ledger that downdates stale keys (or recomputes the projector) and compacts periodically should make degradation track live facts rather than total writes.",
+   "revision_note": "1) Drop the WilKE rollback attribution. In the search results WilKE does layer selection, not rollback. Cite OneEdit's KG-level rollback and 'Tracing and Reversing Edits' (2505.20819) as the rollback and reversal prior work, and use the latter as an extra rollback-arm baseline. 2) Widen the diagnosis from AlphaEdit's soft cache_c to the 2025-26 history-aware null-space editors: BetaEdit (2605.09285, code at lbq8942/BetaEdit), OrthoEdit (TACL 2026) and EvoEdit (2510.13851). For hard projectors, predict near-total blocking of revisions (realised fraction of roughly 1 - ||P_hist k_new||/||k_new||), not 1/(n+1). The fix there is to remove the stale key's direction and recompute or downdate the eigendecomposition. Validate both regimes in the CPU toy. This is the strongest selling point, because these are the current SOTA. 3) Do not claim the same-subject key-collision observation as new. Credit S2RKE (2502.06868), which reports MEMIT same-subject key cosine of about 1, and 'Beyond the Covariance Trap' (2603.15518). The new parts are supersession, garbage in the protected set, and the live-facts scaling law. 4) The task and benchmark framing is partly taken. Add the ACL 2025 sLKE benchmark (answers to the same concept updated repeatedly) next to AToKe-ME, and add MoKE as a baseline. Position the work as a mechanistic explanation of why parametric editors fail sLKE, with a training-free fix. 5) Add PRISM Edit (2607.11327) and its TimeConflict/TIMECF benchmark for the history-preservation side. Garbage collection discards history, so report historical recall honestly against PRISM Edit, or scope it out explicitly. 6) The kill criterion (4) check of 2606.26783 found nothing in the snippets. That paper reports degradation after about 5k edits and bounded protection, with no duplicate-key diagnosis. Still skim the full PDF and BetaEdit's analysis section before committing, since neither could be opened here. 7) Compute stays within budget. Adding BetaEdit, OrthoEdit and EvoEdit runs on GPT2-XL and phi-1.5 adds about 20-30 GPU-hours. Consider dropping the Llama3-8B point if the budget is tight.",
+   "added_baselines": [
+    "BetaEdit (IJCAI 2026, arXiv 2605.09285; github lbq8942/BetaEdit), the history-aware null-space editor, vanilla and with stale-key removal",
+    "OrthoEdit (TACL 2026), the recursive shared null space over previously edited keys",
+    "EvoEdit (arXiv 2510.13851), sequential null-space alignment",
+    "MoKE / serial lifelong editing (ACL 2025), plus its sLKE benchmark as an evaluation set",
+    "Training-free edit reversal from 'Tracing and Reversing Edits in LLMs' (ICLR 2026, 2505.20819) as an alternative rollback arm",
+    "PRISM Edit (2607.11327) as the time-aware comparator on historical versus current recall",
+    "RoSE (2603.15518) as a same-subject comparator, batch setting only"
+   ],
+   "recommend": "pursue_with_pivot"
+  },
+  {
+   "plan_no": 11,
+   "closest_work": [
+    {
+     "title": "Exact Conversion of In-Context Learning to Model Weights in Linearized-Attention Transformers (Chen, Hu, Jin, Lee, Kawaguchi)",
+     "venue_year": "ICML 2024 (PMLR 235)",
+     "url": "https://arxiv.org/html/2406.02847v2",
+     "overlap": "VERIFIED: arXiv 2406.02847 is this paper. Its ICLCA algorithm moves the effect of in-context demonstrations exactly into bias terms of linearized transformers, and approximately for softmax/GPT-2. It is the single-context, no-merge identity that the plan builds on. It does not merge many sessions, handle decay or delta-rule models, protect generic queries, or resolve contradictions."
+    },
+    {
+     "title": "Structured Memory for Edge Language Models: Persistent Context and Corpus Retrieval via O(1) SSM State Injection (PRECOG + SMC; Madan Gopal et al., BrainChip)",
+     "venue_year": "arXiv Aug 2026 (2608.02560)",
+     "url": "https://arxiv.org/pdf/2608.02560",
+     "overlap": "CLOSEST NEW THREAT; the plan missed it. It works on a 1.2B gated SSM (TENNs-LLM). Corpora are pre-encoded as SSM hidden states, and at query time the top-k states are composed by softmax-weighted averaging into h_init and injected as the initial recurrent state. Its SMC layer 'consolidates short-term episodic states into long-term semantic memory' and fuses them with retrieved states. That is the plan's deploy variant (a), a persistent injected initial state built from session states, already published for SSMs. Per the snippets, the composition is a heuristic: the exact guarantee covers only top-1 single-chunk injection, and quality degrades as k grows. There is no ridge or query-Gram solve, no generic-text protection, no recency-weighted contradiction handling, and no generic-KL frontier."
+    },
+    {
+     "title": "State Soup: In-Context Skill Learning, Retrieval and Mixing (Pióro, Wołczyk, Pascanu, von Oswald, Sacramento)",
+     "venue_year": "ICML 2024 NGSM workshop (arXiv 2406.08423)",
+     "url": "https://arxiv.org/pdf/2406.08423",
+     "overlap": "It stores, retrieves and linearly interpolates Mamba-2.8B recurrent states as task vectors. Interpolation is exact for a single gated-linear layer and approximate in deep models. This is exactly the plan's 'naive state sum/mean' baseline, which is therefore prior work, not a strawman. It does not use ridge or Gram-weighted merging, protection, or fact retention across sessions."
+    },
+    {
+     "title": "Studying the Soupability of Documents in State Space Models (Jafari, Wang, Bergen, Berg-Kirkpatrick)",
+     "venue_year": "arXiv 2025 (2505.24033)",
+     "url": "https://arxiv.org/html/2505.24033v2",
+     "overlap": "It encodes documents independently and pools their Mamba2 states (for example by averaging) into one context state for multi-hop QA. The pooling needs finetuning to work well. This is multi-context state merging into one state, but it is per-query and not a persistent consolidated memory, and the merge is not closed-form regression."
+    },
+    {
+     "title": "Language Models Need Sleep (Lee, McLeish, Goldstein, Fanti); v3 titled 'Do Language Models Need Sleep?'",
+     "venue_year": "ICML 2026 (arXiv 2605.26099)",
+     "url": "https://icml.cc/virtual/2026/74224",
+     "overlap": "VERIFIED ID. The model periodically converts recent context into persistent fast weights in its SSM blocks by N offline recurrent passes with a learned local rule, trained end to end by backprop through sleep, before clearing the KV cache. The goal is the same, consolidating context into persistent SSM weights. The rule is learned and needs training of the architecture, and it is tested on synthetic and math tasks, not with frozen public LMs. A separate paper with the same title by Behrouz et al. (2606.03979, seen only via a document-sharing site) uses distillation plus RL 'dreaming', which is also gradient-based."
+    },
+    {
+     "title": "FAAST: Forward-Only Associative Learning via Closed-Form Fast Weights for Test-Time Supervised Adaptation (Bao et al.)",
+     "venue_year": "arXiv May 2026 (2605.04651)",
+     "url": "https://arxiv.org/pdf/2605.04651",
+     "overlap": "VERIFIED ID. It compiles labeled examples into fast weights analytically in one forward pass, as the minimum-norm least-squares (pseudoinverse) solution, giving O(1) inference with no context. The 'closed-form least-squares fast weights instead of gradients' claim is therefore taken. FAAST does not use a pretrained recurrent LM's own end-of-session states, does not merge across sessions with recency, and does not protect generic text."
+    },
+    {
+     "title": "State Tuning: State-based Test-Time Scaling on RWKV-7; and S0 tuning on Qwen3.5 GatedDeltaNet hybrids",
+     "venue_year": "arXiv 2025 (2504.05097) / 2026",
+     "url": "https://arxiv.org/html/2504.05097v1",
+     "overlap": "These learn a persistent initial state by gradient with frozen weights. They are the gradient counterpart of the plan's fold, and the plan's kill criterion (2) already names this baseline. One source argues that tuned states mainly elicit existing knowledge rather than inject new facts, which supports the plan's fact-injection framing as an open question. The S0 tuning snippet came without a verified arXiv ID."
+    },
+    {
+     "title": "Dataless Knowledge Fusion by Merging Weights of Language Models (RegMean; Jin et al.)",
+     "venue_year": "ICLR 2023 (arXiv 2212.09849)",
+     "url": "https://arxiv.org/pdf/2212.09849",
+     "overlap": "The merge formula M = (sum S_i C_i)(sum C_i)^-1 is RegMean's per-linear-layer closed form with input Gram matrices. The plan's novelty is applying it to fast-weight states, adding a protection term and recency, and refitting bottom-up. No search result applies RegMean to recurrent states."
+    },
+    {
+     "title": "AlphaEdit: Null-Space Constrained Knowledge Editing for Language Models",
+     "venue_year": "ICLR 2025 (arXiv 2410.02355)",
+     "url": "https://arxiv.org/pdf/2410.02355",
+     "overlap": "VERIFIED ID. Its null-space projection of edits against preserved-knowledge keys is the protection mechanism the plan uses via the lambda*C_ref term. The plan should call its version ridge-regularized soft protection, not exact null-space projection."
+    },
+    {
+     "title": "Locating and Editing Factual Associations in Mamba",
+     "venue_year": "COLM 2024 (arXiv 2404.03646)",
+     "url": "https://arxiv.org/html/2404.03646v2",
+     "overlap": "ROME-style rank-one editing inserts facts in Mamba-2.8B, so closed-form fact insertion into an SSM's MLP and projection weights exists. It should be a baseline on the CounterFact track in addition to AlphaEdit."
+    },
+    {
+     "title": "Cartridges: Lightweight and general-purpose long context representations via self-study (Eyuboglu, Ré et al.)",
+     "venue_year": "ICLR 2026 (arXiv 2506.06266)",
+     "url": "https://arxiv.org/abs/2506.06266",
+     "overlap": "VERIFIED ID. It trains a KV-cache artifact per corpus offline by context distillation on self-generated conversations, and Cartridges compose at inference. The goal is the same, but the method is gradient-based and transformer-only."
+    }
+   ],
+   "queries_run": [
+    "Exact Conversion of In-Context Learning to Model Weights in Linearized-Attention Transformers",
+    "\"Language Models Need Sleep\" arXiv 2026 consolidation",
+    "FAAST closed-form fast weights arXiv 2026",
+    "merging recurrent states linear attention SSM \"state soup\" OR \"state merging\" Mamba multiple contexts",
+    "[extended] consolidate fast weights into slow weights closed-form DeltaNet RWKV-7 multi-session memory without gradients",
+    "Fast Weight Attention for Continual Learning arXiv 2608.27763",
+    "persistent initial state recurrent language model knowledge injection state tuning RWKV Mamba \"initial state\" facts 2025",
+    "knowledge editing linear attention recurrent state model closed-form least squares DeltaNet Mamba editing facts null space",
+    "gradient-free context-to-weights consolidation continual learning across sessions LLM 2026 arXiv closed-form memory compilation",
+    "\"Structured Memory for Edge Language Models\" SSM state injection persistent context",
+    "PRECOG selective SSM retrieved states composed initial recurrent state injection preprint",
+    "Cartridges self-study arXiv 2506.06266 OR RegMean \"Dataless Knowledge Fusion by Merging Weights\" linear attention states"
+   ],
+   "verdict": "partially_novel",
+   "differentiation": "I tried to refute the plan's novelty with 12 searches. These covered its cited IDs, state merging and soups, closed-form fast weights, state injection, gradient-free consolidation, and knowledge editing in SSMs. I found no published gradient-free, multi-session merge that turns an LM's own recurrent states into a persistent state or weight term and also includes ridge/Gram weighting, generic-text protection and recency-based contradiction handling. The plan's Day-0 drop condition is therefore not triggered.\n\nThe space around it is more crowded than the plan assumes, though, and two of its implicit claims are taken.\n(1) 'Persist session states by injecting them as the initial state' is already published. State Soup (2406.08423) does linear state interpolation. Document soupability (2505.24033) pools states. Most directly, PRECOG/SMC (2608.02560, Aug 2026) composes top-k stored SSM states by softmax weighting into h_init on a 1.2B gated SSM and 'consolidates short-term episodic states into long-term semantic memory'.\n(2) 'Closed-form least-squares fast weights instead of gradients' is FAAST (2605.04651).\nConsolidating context into SSM fast weights during a sleep phase is Lee et al. (2605.26099, ICML 2026), but it uses a learned rule trained by backprop.\n\nThe remaining, defensible delta has four parts:\n(a) The merge rule is principled rather than heuristic. A per-head, RegMean-style ridge solve over self-read query Grams, with a generic-reference Gram for protection and recency-weighted RLS, replaces averaging or softmax composition. The test is that it beats State-Soup averaging and PRECOG-style top-k composition as N grows, where PRECOG itself reports degradation.\n(b) Bottom-up refitting of fresh-context queries handles query/key misalignment.\n(c) The method runs on frozen public decaying delta-rule LMs (RWKV-7, DeltaNet, GLA, Mamba2) with no training at all, unlike Sleep.\n(d) The analysis maps where folding succeeds or fails by decay, rank and alignment, on a recall-vs-generic-KL frontier against state tuning and S0 tuning, LoRA, ROME/AlphaEdit and RAG.\nThe claimed 'exact conversion' and 'state as persistent memory' framing has to go.",
+   "revised_title": "When Does Folding Recurrent States into Memory Work? Ridge-Optimal, Protected Consolidation of Session States in Linear-Attention LMs",
+   "revised_one_liner": "State souping and PRECOG-style state injection already persist sessions by averaging recurrent states. We replace averaging with a gradient-free, per-head ridge fold, built on query Grams, protected against generic text and weighted toward recent sessions. We then map when it beats averaging, gradient state tuning, LoRA and RAG on the fact-recall vs generic-KL frontier across RWKV-7, DeltaNet, GLA and Mamba2.",
+   "revision_note": "1) Fix the closest-work list. Chen et al. is verified as arXiv 2406.02847 (ICML 2024). 'Language Models Need Sleep' 2605.26099 is Lee, McLeish, Goldstein and Fanti (ICML 2026; v3 is titled 'Do Language Models Need Sleep?'). It uses a learned local rule with backprop through offline SSM passes. Also note the same-title Behrouz et al. paper (2606.03979, not verified on arXiv). FAAST 2605.04651 is verified as closed-form min-norm least-squares fast weights. Cartridges 2506.06266 (ICLR 2026) and AlphaEdit 2410.02355 are verified.\n\n2) Add the missed close works and cite them prominently: PRECOG/SMC (2608.02560, persistent SSM state injection plus episodic-to-semantic state consolidation on a 1.2B SSM), State Soup (2406.08423) and Document Soupability (2505.24033).\n\n3) Relabel the 'naive state sum/mean' baseline as State Soup averaging, and add PRECOG-style top-k softmax-weighted state composition as a baseline. This becomes the main comparison: the ridge fold must win as N grows, because averaging degrades there.\n\n4) Add an S0-tuning / RWKV state-tuning gradient initial state (already partly present) and a FAAST-style min-norm closed-form fit without protection or recency, as an ablation separating 'closed form' from 'protected + recency'.\n\n5) On the CounterFact track, add ROME on SSMs (Locating and Editing Factual Associations in Mamba, 2404.03646) next to AlphaEdit and MEMIT.\n\n6) Drop or soften three claims: (i) 'first to persist session states as an injected initial state'; (ii) 'closed-form fast weights' as a novelty in itself; (iii) 'AlphaEdit-style null-space'. The plan's term is soft ridge protection, so describe it that way.\n\n7) Make the headline contributions these: the RegMean-on-fast-states merge with reference-Gram protection and recency RLS; bottom-up fresh-query refitting; and the diagnostic map (decay half-life, state rank, query/key alignment) across four architectures on the recall-vs-generic-KL frontier.\n\n8) The kill criterion should now also trigger if PRECOG-style composition matches the ridge fold within noise at N >= 10. In that case, fall back to the diagnostic paper.\n\nThe compute budget (about 120 GPU-hours) is unchanged.",
+   "added_baselines": [
+    "State Soup linear state interpolation/averaging (Pióro et al., 2406.08423), relabelling the plan's naive-sum baseline",
+    "PRECOG-style top-k softmax-weighted state composition injected as h_init (2608.02560)",
+    "Document-soup state pooling for Mamba2 (2505.24033), per-query pooled state",
+    "S0 tuning / RWKV-7 state tuning (2504.05097): gradient-learned persistent initial state on the same session data",
+    "FAAST-style min-norm least-squares closed-form fast weights without protection or recency (2605.04651), as an ablation",
+    "ROME rank-one editing on Mamba (2404.03646) on the CounterFact track"
+   ],
+   "recommend": "pursue_with_pivot"
+  },
+  {
+   "plan_no": 12,
+   "closest_work": [
+    {
+     "title": "Efficient Continual Learning in Language Models via Thalamically Routed Cortical Columns",
+     "venue_year": "arXiv 2026 (2602.22479)",
+     "url": "https://arxiv.org/pdf/2602.22479",
+     "overlap": "The most direct scoop of the thermostat. According to the search snippet, it has a replay controller that tracks how much past-task log-perplexity has risen since each task ended, smooths that with a moving average, and defines the controller error as the amount by which the smoothed gap exceeds a target. It keeps a PI-style integral state and adjusts replay strength online. That is the same closed-loop structure as the plan: a forgetting sensor on old data, a target epsilon and a PI integral on replay strength. It differs in being for LLMs, in using a loss/perplexity sensor rather than KL to write-time logits, in having no per-class allocation, and in fitting no law."
+    },
+    {
+     "title": "Closed-loop Control for Online Continual Learning",
+     "venue_year": "(venue/year not shown in snippet; paperswithcode listing)",
+     "url": "https://astro.paperswithcode.com/paper/closed-loop-control-for-online-continual",
+     "overlap": "Gets real-time feedback on forgetting from an extra test memory, which plays the same role as the plan's sentinels. It uses RL to adjust replay hyperparameters online during the stream. This is a closed-loop replay controller for online continual learning. It differs in using an RL policy rather than a PI controller and in not using a KL sensor."
+    },
+    {
+     "title": "FOREVER: Forgetting Curve-Inspired Memory Replay for Language Model Continual Learning",
+     "venue_year": "ACL 2026 (arXiv 2601.03938)",
+     "url": "https://arxiv.org/abs/2601.03938",
+     "overlap": "Confirmed to exist. A forgetting-curve scheduler decides when to replay, using a model-centric clock (optimizer-update magnitude) instead of step counts. An intensity-aware regularizer, scaled by a parameter-update instability ratio, decides how strongly to replay. So it covers both when and how much, but open-loop: the signal comes from parameter space with no measurement on old data. LLMs only (Qwen3-0.6B to 13B). It is an update-magnitude baseline the plan must beat."
+    },
+    {
+     "title": "MSSR: Memory-Aware Adaptive Replay for Continual LLM Fine-Tuning",
+     "venue_year": "arXiv 2026 (2603.09892)",
+     "url": "https://arxiv.org/pdf/2603.09892",
+     "overlap": "Confirmed to exist. Gives each sample an Ebbinghaus-style memory strength that rises when it is replayed and decays over time. Replay gets sparser as memories stabilize, and weak samples get priority, at a given replay ratio, with LoRA. The schedule is adaptive but model-free: memory strength is modeled, not measured from model outputs. It fits no replay law versus task count. LLMs only."
+    },
+    {
+     "title": "Scaling Laws for Forgetting during Finetuning with Pretraining Data Injection (Bethune et al.)",
+     "venue_year": "ICML 2025 (arXiv 2502.06042)",
+     "url": "https://arxiv.org/pdf/2502.06042",
+     "overlap": "Fits scaling laws of forgetting against the injected-replay fraction, model size and target-data size, and finds about 1% injection prevents forgetting. This is the replay-fraction scaling law for a single fine-tuning step in LLMs. It does not vary the number of tasks T, the size of the trainable set (LoRA rank vs full fine-tuning) or vision. It anticipates the form of H2, so the plan must cite it and set itself apart."
+    },
+    {
+     "title": "Scalable Strategies for Continual Learning with Replay (Hickok)",
+     "venue_year": "arXiv 2025 (2505.12512)",
+     "url": "https://arxiv.org/pdf/2505.12512",
+     "overlap": "Studies reducing the per-batch replay ratio (optionally with LoRA) and adding a post-task consolidation phase. Needs up to 55% fewer replay samples for a given performance target, and reports total replay usage relative to 1:1. This directly overlaps 'replay saved at equal accuracy' and the ratio-vs-LoRA axis, but it fits no r*(T) law and has no closed-loop sensor."
+    },
+    {
+     "title": "Learn the Time to Learn: Replay Scheduling in Continual Learning (Klasson, Kjellstrom, Zhang)",
+     "venue_year": "TMLR 2023 (arXiv 2209.08660)",
+     "url": "https://arxiv.org/abs/2209.08660",
+     "overlap": "Confirmed to exist. Uses MCTS and then an RL policy to choose which tasks to replay at each step under a processing-time budget. It is prior art on learned when/what replay scheduling and its oracle search, and matches the plan's per-task oracle schedule by checkpoint branching."
+    },
+    {
+     "title": "Adaptive Memory Replay for Continual Learning (Smith et al.)",
+     "venue_year": "CVPRW 2024 (arXiv 2404.12526)",
+     "url": "https://arxiv.org/abs/2404.12526",
+     "overlap": "Confirmed to exist. A bandit with Boltzmann sampling adjusts each past task's share of replay by its propensity to be forgotten. It assumes full data access and targets training efficiency. Prior art for forgetting-proportional class/cluster allocation."
+    },
+    {
+     "title": "Memory Is Not the Bottleneck / Forget Forgetting: Continual Learning in a World of Abundant Memory (Cho et al.)",
+     "venue_year": "ICLR 2026 (arXiv 2502.07274)",
+     "url": "https://arxiv.org/abs/2502.07274v3",
+     "overlap": "Confirmed to exist; later versions are retitled 'Forget Forgetting...' and it is an ICLR 2026 poster. Sets up the unlimited-buffer, compute-bound regime and shows naive replay is strong. It also finds that abundant replay reduces plasticity, which bears on the plan's 'too much replay' side. This is the framing and baseline source."
+    },
+    {
+     "title": "What Will My Model Forget? Forecasting Forgotten Examples in Language Model Refinement (Jin & Ren)",
+     "venue_year": "ICML 2024 (arXiv 2402.01865)",
+     "url": "https://arxiv.org/abs/2402.01865",
+     "overlap": "Confirmed ID. Forecasts which upstream examples an update will make the model forget, from logit changes or representation inner products, and replays them. Its follow-up 2406.14026 shows forgetting matrices are low-rank. Prior art for the forgetting-proxy race and for forecast-guided replay."
+    }
+   ],
+   "queries_run": [
+    "FOREVER arXiv 2601.03938 replay continual learning",
+    "MSSR arXiv 2603.09892 replay",
+    "adaptive replay ratio continual learning closed-loop forgetting signal how much to replay 2025",
+    "[extended] scaling law replay fraction number of tasks continual learning minimal replay forgetting pretrained",
+    "Klasson \"Learn the Time to Learn\" replay scheduling continual learning",
+    "Jin Ren \"What Will My Model Forget\" forecasting forgotten examples arXiv",
+    "\"Scalable Strategies for Continual Learning with Replay\" 2505.12512",
+    "Cho \"Memory Is Not the Bottleneck\" weight space consolidation continual learning 2502.07274",
+    "predicting forgetting continual learning pretrained ViT KL divergence proxy parameter distance per-class forgetting replay allocation 2025 2026",
+    "scaling laws forgetting fine-tuning pretraining data injection fraction Bethune 2025",
+    "[extended] compute-efficient replay class-incremental pretrained ViT LoRA how often to replay replay frequency forgetting 2025 2026 arXiv",
+    "continual learning replay triggered by drift detection controller adjusts replay ratio stored logits sentinel samples monitoring forgetting online"
+   ],
+   "verdict": "partially_novel",
+   "differentiation": "All cited IDs resolve to the papers the plan claims: FOREVER 2601.03938 (ACL 2026), MSSR 2603.09892, Klasson 2209.08660, Smith 2404.12526, Jin & Ren 2402.01865, and Cho 2502.07274, which is now 'Forget Forgetting', ICLR 2026.\n\nThe search refutes the plan's claim that 'prior schedulers are open-loop'. Two works already close the loop:\n- arXiv 2602.22479 (Thalamically Routed Cortical Columns, 2026) runs a PI-style replay controller. It measures the rise in past-task log-perplexity, smooths it with an EMA, takes the gap above a target as the error, keeps an integral state, and adjusts replay strength online.\n- 'Closed-loop Control for Online Continual Learning' uses a held-out test memory as a feedback signal and an RL policy to set replay hyperparameters.\n\nFOREVER already adapts both when and how strongly to replay, from update magnitude. MSSR adapts replay sparsity per sample.\n\nThe KL thermostat is therefore not a novel mechanism. What is left of it is the sensor (KL against write-time logits, split into recency leak and within-old-class drift) and its use in vision class-incremental learning on pretrained ViTs.\n\nBethune et al. (ICML 2025) already fit scaling laws of forgetting against the replay/injection fraction, for LLM fine-tuning. Hickok (2505.12512) already studies cutting the replay ratio with LoRA plus consolidation and reports replay saved.\n\nWhat survives, with no direct match in 12 searches:\n- (a) r*(T, epsilon): how the minimal replay fraction grows with the number of tasks, crossed with how many parameters may change (LoRA rank vs full fine-tuning vs a from-scratch ResNet), in vision continual learning with an unlimited buffer.\n- (b) A per-class race between forgetting proxies: old-data write-time-logit KL vs RL's-Razor new-task KL vs parameter/Fisher distance, with the exact leak/within-old split.\n- (c) An honest equal-FLOP test of whether any adaptive replay policy has headroom over the best fixed ratio in hindsight, using a per-task oracle schedule.",
+   "revised_title": "How Much Replay Does a Pretrained ViT Need? Replay-Demand Laws and Drift Sensors for Compute-Bound Continual Learning",
+   "revised_one_liner": "With an unlimited buffer, measure how the smallest replay fraction that keeps forgetting under epsilon grows with the number of tasks, for each size of trainable set (LoRA rank vs full fine-tuning vs from scratch). Race old-data write-time-logit KL against new-task KL (RL's Razor) and parameter-space proxies as per-class forgetting predictors. Use a per-task oracle schedule to test whether any adaptive replay controller, including existing PI and RL ones, has headroom over the best fixed ratio at equal FLOPs.",
+   "revision_note": "Drop these claims:\n- That prior replay schedulers are open-loop.\n- That a closed-loop PI controller over the replay fraction is a contribution. arXiv 2602.22479 already runs a PI-style, forgetting-gap-driven replay-strength controller, and 'Closed-loop Control for Online Continual Learning' already adapts replay online from test-memory feedback.\n\nRecast the thermostat as an instantiation of these controllers with a better sensor, or as a probe of policy headroom. Its contribution then rests on the sensor comparison: the same PI loop driven by KL vs cross-entropy vs update magnitude.\n\nCite and position against:\n- Bethune et al. ICML 2025: a replay-fraction scaling law, but for one LLM fine-tune with no T axis. State that r*(T) adds the number-of-tasks and trainable-capacity axes, in vision.\n- Hickok 2505.12512: replay-ratio reduction plus consolidation, and 'replay saved' accounting.\n\nUse the Jin & Ren follow-up 2406.14026 (low-rank forgetting matrices) as an extra predictor in the proxy race.\n\nCorrect the citation: Cho et al. 2502.07274 is now titled 'Forget Forgetting: Continual Learning in a World of Abundant Memory' (ICLR 2026). Note its finding that abundant replay hurts plasticity, which r*(T) curves should also report as new-task accuracy.\n\nThe day-1 kill check on FOREVER and MSSR is resolved:\n- Neither fits replay against T.\n- Neither uses an output-space sensor on old data.\n- Both are for LLMs.\n- FOREVER does modulate replay intensity open-loop. Keep it as a baseline.\n\nThe headline is now the measurement paper. The thermostat becomes a secondary section, or goes to the appendix if the oracle headroom is under 25%.",
+   "added_baselines": [
+    "Forgetting-gap PI replay controller of arXiv 2602.22479, ported: the same PI loop driven by old-task loss gap, as the direct closed-loop competitor",
+    "Closed-loop Control for Online Continual Learning (RL-tuned replay hyperparameters from test-memory feedback)",
+    "FOREVER (2601.03938) update-magnitude scheduler plus intensity-aware replay regularizer, ported to ViT",
+    "MSSR (2603.09892) memory-strength-decay sample scheduler at matched replay ratio",
+    "Hickok 2505.12512: reduced replay ratio plus post-task consolidation phase (with LoRA)",
+    "Bethune et al. 2502.06042 functional form, fitted as an alternative to the plan's constant/log/power/linear family for r*(T)",
+    "Jin & Ren low-rank forgetting-matrix predictor (2406.14026) as an extra entrant in the proxy race"
+   ],
+   "recommend": "pursue_with_pivot"
+  },
+  {
+   "plan_no": 13,
+   "closest_work": [
+    {
+     "title": "Nested Learning: The Illusion of Deep Learning Architectures (Behrouz, Razaviyayn, Zhong, Mirrokni; HOPE / Continuum Memory System)",
+     "venue_year": "NeurIPS 2025 / arXiv 2512.24695 (v1 31 Dec 2025). The ID is verified as real.",
+     "url": "https://arxiv.org/abs/2512.24695v1",
+     "overlap": "This is the substrate the plan analyses: CMS MLP blocks updated at different frequencies, with the claim that lower frequency gives more persistent memory and a 'loop' by which forgotten knowledge can partly be recovered. Search summaries describe no ablation that isolates update frequency from retention and no analysis of transfer between levels, so the plan's target gap looks open. I could not read the full text or appendix."
+    },
+    {
+     "title": "Language Models Need Sleep: Learning to Self-Modify and Consolidate Memories (Behrouz, Hashemi, Mirrokni et al.)",
+     "venue_year": "arXiv 2606.03979 (June 2026). The ID is verified as real.",
+     "url": "https://arxiv.org/pdf/2606.03979",
+     "overlap": "This is a follow-up from the same group that tackles the plan's open problem directly: moving in-context, short-term memory into long-term parameters. It does so with explicit consolidation, 'Knowledge Seeding' (upward distillation from a smaller model into a larger one), plus RL-driven 'Dreaming' replay. It also formalises update frequency for CMS-like components. It does not, as far as snippets show, present the shared-loss lagged-copy degeneracy or a spacing theory. It does, however, implicitly concede that frequency alone does not consolidate, and it is now the main explicit-transfer baseline and framing threat."
+    },
+    {
+     "title": "Learning in Temporally Structured Environments (Jones et al.; workshop version 'Learning at Multiple Timescales')",
+     "venue_year": "ICLR 2023 (NeurIPS 2022 MemARI workshop)",
+     "url": "https://iclr.cc/virtual/2023/poster/10732",
+     "overlap": "This is the most dangerous precedent and it is missing from the plan. Each weight is a sum of subweights with different learning AND decay rates, all trained on the same error. The paper proves that coupled-timescale models reduce to this multiscale learner by reparameterisation, and that momentum equals a fast weight with a negative learning rate. The plan's K-level ODE (shared error, retention A_k) and its 'no decay means no timescale separation' degeneracy are essentially special cases of this framework. Only the discrete periods C_k and the delta-rule load are new."
+    },
+    {
+     "title": "Interacting Adaptive Processes with Different Timescales Underlie Short-Term Motor Learning (Smith, Ghazizadeh, Shadmehr)",
+     "venue_year": "PLoS Biology 2006 (verified)",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1463025",
+     "overlap": "This is the shared-error two-state model in which the processes differ by error sensitivity and retention. It predicts spontaneous recovery and savings. The plan's statement that timescales come from retention factors rather than learning rate or update frequency is this model's core principle."
+    },
+    {
+     "title": "Using fast weights to deblur old memories (Hinton & Plaut)",
+     "venue_year": "CogSci 1987 (verified)",
+     "url": "https://www.cnbc.cmu.edu/~plaut/papers/abstracts/HintonPlaut87CogSciConf.fastWeights.html",
+     "overlap": "Each connection has a slow and a fast weight trained on the same error, and the fast weight decays toward zero. This is exactly 'shared residual + fast-level retention A_f<1', the plan's fix."
+    },
+    {
+     "title": "Computational principles of synaptic memory consolidation (Benna & Fusi)",
+     "venue_year": "Nature Neuroscience 2016 (verified; arXiv preprint 1507.07580)",
+     "url": "https://arxiv.org/abs/1507.07580v1",
+     "overlap": "Coupled multi-timescale synaptic variables give closed-form memory curves and SNR(t), and the abstract states that the model explains spacing effects. This anticipates the plan's 'emergent spacing optimum' claim in a coupled-chain setting."
+    },
+    {
+     "title": "Predicting the optimal spacing of study: a multiscale context model of memory (Mozer, Pashler, Cepeda, Lindsey, Vul)",
+     "venue_year": "NIPS 2009 (verified)",
+     "url": "https://www.yorku.ca/ncepeda/publications/MPCLV2009.pdf",
+     "overlap": "Derives a non-monotonic spacing-retention curve and an optimal inter-study interval from multiscale traces. This is prior art for the interior spacing optimum g*."
+    },
+    {
+     "title": "Fast and slow synaptic plasticity enables concurrent control and learning",
+     "venue_year": "eLife reviewed preprint 2025",
+     "url": "https://elifesciences.org/reviewed-preprints/105043",
+     "overlap": "Fast and slow weights are driven by the same feedback signal. The fast weights correct immediate errors and the slow weights gradually absorb what the fast ones were correcting. This is again shared-error fast/slow consolidation, in a control setting, with no spacing or session-reset analysis."
+    },
+    {
+     "title": "Organizing memories for generalization in complementary learning systems / Go-CLS (Sun, Advani, Spruston, Saxe, Fitzgerald)",
+     "venue_year": "Nature Neuroscience 2023 (verified)",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10400413",
+     "overlap": "Analytical theory of when fast-store content should be consolidated into slow weights: only when doing so improves generalization. This is relevant to 'what moves into weights, and when', but the trigger is predictability, not spacing or retention asymmetry."
+    }
+   ],
+   "queries_run": [
+    "Nested Learning continuum memory system analysis frequency levels timescale arXiv 2026 (extended)",
+    "arXiv 2512.24695 Nested Learning Illusion of Deep Learning Architectures",
+    "\"Language Models Need Sleep\" Learning to Self-Modify and Consolidate Memories",
+    "continuum memory system HOPE slow levels lagged copy fast level same objective degenerate analysis",
+    "multi-timescale fast and slow weights shared error consolidation spacing effect theory neural network 2025 (extended)",
+    "Smith Ghazizadeh Shadmehr 2006 interacting adaptive processes different timescales motor learning two-state model",
+    "consolidating fast weights into slow weights test-time training linear attention state reset session 2026 arXiv",
+    "spacing effect neural network optimal spacing gap memory model 2025 arXiv spaced repetition linear associative memory",
+    "critique OR analysis of Nested Learning HOPE continuum memory system update frequency ablation forgetting 2026",
+    "Hinton Plaut 1987 \"Using fast weights to deblur old memories\"",
+    "Matt Jones \"Learning at Multiple Timescales\" subweights decay sum of weights equivalent single learning rate",
+    "Benna Fusi 2016 computational principles of synaptic memory consolidation; Sun 2023 organizing memories for generalization complementary learning systems",
+    "theory of multi-frequency test-time memory levels update period chunk size linear regression Titans HOPE when do slow levels help 2026 arXiv"
+   ],
+   "verdict": "partially_novel",
+   "differentiation": "I ran 12 live searches and found no paper that scoops the CMS-specific claim. Specifically, I found no paper showing that Nested-Learning/HOPE CMS levels trained on one shared loss at different update periods are lagged, scaled copies of the fastest level and so do not consolidate across a session reset. I found no independent CMS ablation or critique that separates update frequency from retention. The only substantive Nested Learning follow-up I found is from the same group: 'Language Models Need Sleep', arXiv 2606.03979, June 2026. It adds explicit consolidation (upward distillation, 'Knowledge Seeding', plus RL 'Dreaming' replay) rather than analysing whether frequency alone consolidates. Indirectly, this supports the plan's premise.\n\nThe general principle, however, is clearly prior art and must not be claimed:\n(a) Jones et al., ICLR 2023 ('Learning in Temporally Structured Environments'). Its weights are sums of subweights with separate learning and decay rates on a shared error. It proves equivalences between coupled-timescale models and that multiscale learner, and shows that momentum is equivalent to a fast weight. The plan's K-level ODE and its 'no decay means no separation' invariant fall inside this framework.\n(b) Smith, Ghazizadeh & Shadmehr 2006. Timescales come from retention plus error sensitivity under a shared error.\n(c) Hinton & Plaut 1987. Fast and slow weights share an error and the fast weights decay, which is the plan's fix.\n(d) Benna & Fusi 2016 and Mozer et al. 2009 already produce spacing effects and optimal-spacing intervals from multi-timescale memories.\n\nWhat remains defensible:\n(1) The discrete-period, chunk-accumulated form of the degeneracy, specific to CMS/HOPE (period C_k, not learning rate), stated as a corollary of Jones/Smith. It also gives an operational test that update frequency is not a timescale in deployed architectures.\n(2) A closed-form design rule (gamma*, C_k ratios, g*) that includes delta-rule capacity and load interference in dimension d. The cognitive and synaptic models lack this.\n(3) The empirical audit of whether nonlinear, residual-chained CMS (DeltaNet+MLP on MQAR, plus a HOPE reimplementation) escapes the degeneracy, measured as cross-session recall after a fast-state reset.\n(4) Head-to-head against the Sleep paper's distillation-style consolidation at matched compute.\n\nThe contribution is a modern-architecture audit plus a design rule, not a new principle. Confidence is moderate: I read only snippets, and the Nested Learning appendix and the Sleep paper's full text could not be opened.",
+   "revised_title": "Update Frequency Is Not Retention: Auditing and Fixing Cross-Session Consolidation in Continuum Memory Systems",
+   "revised_one_liner": "Multi-timescale learners only separate timescales through retention asymmetry (Jones et al. 2023; Smith et al. 2006). We first show that Nested-Learning/HOPE CMS levels, trained on one shared loss at different update periods, inherit the no-retention degeneracy: they are lagged copies of the fast level and carry nothing across a session reset. We then derive a load-aware downscaling and period schedule for delta-rule fast states, and test, on DeltaNet+MLP-CMS (MQAR) and a HOPE reimplementation, whether nonlinear CMS escapes the degeneracy, and how the derived schedule compares with distillation-based 'sleep' consolidation.",
+   "revision_note": "1. Present the degeneracy lemma and the K-level shared-error ODE as corollaries or specialisations of Jones et al. ICLR 2023 (multiscale learner, sum of subweights with learning and decay rates, reparameterisation equivalences) and of Smith et al. 2006. Cite both in the intro, and drop 'we prove' language that implies a new principle. Claim only the discrete-period C_k extension, the delta-rule load term, and the session-reset metric as new.\n2. Drop or soften 'emergent spacing optimum' as a headline. Benna-Fusi 2016 (explicitly covers spacing effects) and Mozer 2009 already show it. Keep only the load- and d-dependent closed form for g* as the sharper, falsifiable prediction.\n3. Add 'Language Models Need Sleep' (arXiv 2606.03979) as the explicit-transfer baseline and as the key related-work contrast. Their move to explicit distillation-based consolidation is indirect evidence for the plan's thesis. Reframe the CLS-distillation baseline as a matched-compute, small-scale proxy of Knowledge Seeding.\n4. Correct the closest-work list: arXiv 2512.24695 is verified (Behrouz et al., NeurIPS 2025). Benna-Fusi's arXiv preprint is 1507.07580. Add the eLife 2025 fast/slow plasticity preprint as shared-error precedent.\n5. Weight the paper on kill criterion 2, the nonlinear/HOPE audit. If real CMS escapes the degeneracy, the paper becomes a short note. Before claiming the degeneracy for real HOPE, check whether its CMS uses per-level momentum, Muon or M3, or chunk-accumulated gradients that act as implicit retention, because Jones shows momentum is equivalent to a fast weight with negative learning rate. Also compare to a Gated-DeltaNet decay gate.\n6. Kill criterion 1 is currently not triggered, but repeat a targeted search for papers citing 2512.24695 and 2606.03979 before submission.",
+   "added_baselines": [
+    "Language Models Need Sleep (Behrouz et al., arXiv 2606.03979): Knowledge-Seeding distillation consolidation, reimplemented at small scale as fast-into-slow distillation at session end, plus an optional replay ('Dreaming'-lite) at matched compute",
+    "Jones et al. ICLR 2023 multiscale learner: sum of subweights with learned or fixed per-level learning and decay rates, as the principled retention-asymmetry baseline",
+    "Momentum/optimizer-state ablation: HOPE CMS with per-level momentum or M3 vs plain SGD, to test whether optimizer state already acts as implicit retention",
+    "Gated DeltaNet decay gate (already listed); keep it, and add a learned per-level decay on slow CMS levels"
+   ],
+   "recommend": "pursue_with_pivot"
+  }
+ ],
+ "missingPlans": [
+  {
+   "key": "m-3d-adapter",
+   "title": "Where Should a Frozen CUT3R Keep a Scene It Will Revisit? Budget-Matched State, Snapshot, Replay and Adapter Memory, With a Signal for When an Adapter Is Worth It",
+   "one_liner": "This is a revisit benchmark and analysis, not a new consolidation method. A frozen CUT3R/TTT3R streams visit A, then visit B of the same scene. What A taught it is kept in one of five ways at a matched ~1-2 MB and <=60 s budget: carried recurrent state, a retrieved state snapshot, replayed keyframes, a per-scene LoRA distilled with the published Free-Geometry recipe (full-view teacher to partial-view student), or an ACE-style scene-coordinate head. The paper reports which wins as A grows, and whether a forgetting score computed without ground truth at the end of A predicts when the adapter is worth storing.",
+   "store": "Consolidation from fast state (the CUT3R/TTT3R recurrent state) into weights (a per-scene adapter, or a per-scene scene-coordinate head). Both are compared at matched bytes and compute against the external store (a retrievable state snapshot) and the data buffer (replayed keyframes). This is the 3D section of the big-picture doc, and it covers all four stores. The open question it tests is when content should move from context or store into weights, and across timescales: from within a visit to across visits.",
+   "task": "Streaming 3D reconstruction with cross-session revisits. A frozen CUT3R (TTT3R update rule) streams visit A of an indoor scene. Optionally, G other scenes stream in between as interference. Then it streams visit B of the same scene and outputs per-frame poses and pointmaps. Two things are scored: B's own quality (B-self), and whether B is registered into A's frame (A-anchored, which is essentially relocalization plus mapping).",
+   "gap_addressed": "The adversarial search refuted three of the plan's original framings:\n(a) Distilling a model's full-context predictions into a LoRA so that a reduced-context pass reproduces them is already published as test-time adaptation. Free Geometry (arXiv 2604.14048, Apr 2026) masks frames and makes partial-view features match full-view features through LoRA on VGGT and Depth Anything 3, taking under 2 minutes.\n(b) Per-scene self-calibrated LoRA adapters for 3D foundation models exist. LoRA3D (ICLR 2025) builds 18 MB adapters in 5 minutes from confidence-calibrated pseudo-labels.\n(c) Storing a scene in weights so a later visit can relocalize against it is classic scene-coordinate regression. ACE-G (ICCV 2025) trains a per-scene map code of a few MB in minutes on top of a generic pretrained transformer.\nLight-parameter TTA for long sequences also exists: VGGT-Align uses LayerNorm-only updates.\n\nWhat survives is narrower. No search result evaluates a streaming reconstruction foundation model (CUT3R/TTT3R/VGGT family) across separate sessions of the same scene. The extended search found no work that saves and reloads the state or fast weights across sessions. Every CUT3R follow-up still writes only into the within-stream state: TTT3R, TTSA3R, Rethinking the State Update Gate, ReCal3R, Info3R, FILT3R, SSR. Within-stream loop and revisit handling also stays within a single run (Ray-Aware Pointer Memory 2605.05749, Scal3R with place recognition, ABot-Recon's optional loop closure). The only multi-session reconstruction found is offline SfM (2602.20584).\n\nNobody compares the four stores (state carry, snapshot, keyframe buffer, weights) at matched bytes and compute for revisits. Nobody gives a ground-truth-free rule for when a scene has earned weights. The closest such rules are LLM-side surprise or forgetting gates such as SuRe, which have not been tested on a geometric fast state.\n\nThere is evidence that the regime exists. ABot-Recon (2608.27529) finds local context suffices outdoors, but says persistent context matters in small, frequently revisited indoor spaces. MERG3R and KV-Tracker report that CUT3R and TTT3R degrade on long 7-Scenes streams.",
+   "hypothesis": "H1 (capacity crossover, dose-response). The B-self gain of the best weights store (Free-Geometry-style LoRA on A plus K anchor frames) over the best budget-matched non-weight store is about zero at L=100 and grows with L. At L=1000 on 7-Scenes it is at least 5% relative ATE or Accuracy with a CI excluding 0. This is a deliberately lower bar than the original 15%, because Free Geometry reports only about 3-4% average gains from comparable adaptation.\n\nH2 (earned signal). The re-query forgetting score F, computed at the end of A, gives Spearman rho >= 0.5 with the per-cell adapter-minus-snapshot gain. F re-feeds early keyframes of A against the final state with writes disabled and measures their Sim(3)-aligned disagreement with their original predictions. A frozen threshold policy fit on 7-Scenes has at most 25% of the regret of always-adapt and never-adapt on 12-Scenes and TUM. F also beats two simple predictors: L alone, and TTT3R's mean closed-form learning rate.\n\nH3 (memory, not adaptation). The same-scene adapter built on A beats all of: Free-Geometry TTA run on B itself at equal seconds, an other-scene adapter, and LoRA3D-style pseudo-label calibration on B.\n\nH4 (registration). For A-anchored ATE, adapter plus anchors, or adapter plus snapshot, is competitive with an ACE-style head trained on A using CUT3R's own poses as pseudo-ground truth at equal bytes. Otherwise registration memory belongs in an SCR head, and the adapter's contribution is geometry only, which is still reportable.\n\nH5 (bounded harm). Loading a wrong-scene adapter costs at most 5% relative ATE.",
+   "method": "Backbone. CUT3R cut3r_512_dpt_4_64.pth, frozen. The TTT3R training-free update rule is the default writer. Plain CUT3R is an ablation. Info3R, TTSA3R or FILT3R join as stronger writers if code exists.\n\nRevisit protocol. A is one sequence and B a different sequence of the same scene, in a shared ground-truth frame. A's length L is in {100, 300, 1000}, set by stride. B is 200 frames. The gap G is in {0, 1, 3} interfering scenes.\n\nStores, all decided at the end of A, each <=~2 MB and <=60 s on one GPU:\n- S1 state carry.\n- S2 fp16 snapshot of the final state, retrieved by mean encoder feature.\n- S3 K=8 keyframes, chosen without ground truth (confidence x coverage) and replayed into a reset state.\n- S4 per-scene adapter. A rank-4 LoRA on q/v of the decoder plus the pose head, or a LayerNorm/bias-only variant (VGGT-Align-style). It is trained with the Free-Geometry objective ported to a recurrent model: the teacher is the full-A two-pass TTT3R output, and the student runs on random 4-16-frame sub-clips from a reset state. Pointmap/pose L1 is confidence-weighted. The contribution claimed is NOT this recipe, only its use as a cross-session store.\n- S5 = S4 + S2.\n- S6 ACE-style scene-coordinate head on frozen CUT3R encoder features. It is trained on A with CUT3R-predicted poses as pseudo-labels, at the matched 60 s budget and at its native few-minute budget. At B it relocalizes the first frames and anchors the stream. This is the strongest prior form of 'scene stored in weights for revisits'.\n\nEarned signal. At the end of A, compute three things: F (re-query forgetting); an F-variant on the adapter's training loss after 20 steps (cheap 'distillability'); and the TTT3R learning-rate statistic. The policy: store the adapter iff F > tau, else store a snapshot. Report regret against the per-cell oracle.\n\nOptional CPU toy: a delta-rule fast state of width d against LoRA consolidation as n/d grows, to predict where the crossover should sit.\n\nControls:\n- Other-scene adapter.\n- Equal-seconds TTA on B with the Free Geometry objective and with Test3R-style consistency.\n- Single-pass-teacher adapter.\n- Always-adapt, never-adapt, and oracle policies.\n\n3 seeds and paired bootstrap 95% CIs over scenes.",
+   "datasets": [
+    "7-Scenes (multiple sequences per scene in one ground-truth frame per scene; main go/no-go, used for long-sequence evaluation by TTT3R, Info3R, KV-Tracker, MERG3R)",
+    "12-Scenes (training/test sequences per room in a shared frame; held-out policy test; not verified in this session's searches)",
+    "TUM RGB-D (fr1_desk to fr1_desk2, fr1_desk to fr1_room, and first half to second half of fr3_long_office_household; dynamics sequences as a stress test; check whether the mocap frame is shared before reporting A-anchored metrics)",
+    "ScanNet v2 rescans (_00 to _01, about 20 rooms; changed-scene staleness; B-self metrics only; optional, first to be dropped if compute is short)"
+   ],
+   "models": [
+    "CUT3R cut3r_512_dpt_4_64.pth (frozen, under 1B params)",
+    "TTT3R training-free state-update rule on the same checkpoint (https://arxiv.org/pdf/2509.26645)",
+    "Per-scene trainable parts only: a rank-4 LoRA or LayerNorm/bias adapter (about 0.1-0.5M params), and a small ACE-style scene-coordinate MLP head on frozen CUT3R encoder features (a few MB)",
+    "Optional stronger state writers if code is public: Info3R (https://arxiv.org/pdf/2609.21938), TTSA3R (https://arxiv.org/pdf/2601.22615), ReCal3R (https://arxiv.org/pdf/2607.05356)"
+   ],
+   "baselines": [
+    "CUT3R with state reset at B, and CUT3R state carry",
+    "TTT3R state carry (main fast-state baseline)",
+    "TTT3R final-state snapshot plus retrieval (external store, budget-matched)",
+    "K-keyframe replay into a reset state (data buffer, budget-matched)",
+    "Free Geometry test-time LoRA on B at equal seconds (https://arxiv.org/pdf/2604.14048; code hiteacherIamhumble/Free-Geometry, ported to CUT3R)",
+    "Test3R-style consistency TTA on B at equal seconds",
+    "LoRA3D-style confidence-calibrated pseudo-label LoRA on B (https://arxiv.org/pdf/2412.07746), as a per-scene self-calibration baseline",
+    "ACE/ACE-G-style per-scene scene-coordinate head trained on A with CUT3R pseudo-poses (https://arxiv.org/pdf/2510.11605), the strongest 'scene stored in weights' relocalization baseline",
+    "Stronger state writers (Info3R/TTSA3R/ReCal3R/FILT3R, whichever has code) as the no-weights ceiling",
+    "Controls: other-scene adapter, single-pass-teacher adapter, always-adapt, never-adapt, and the per-cell oracle"
+   ],
+   "metrics": [
+    "B-self ATE RMSE (Sim(3) Umeyama), RPE translation and rotation",
+    "A-anchored ATE on B (Sim(3) fit on A only, applied to B), i.e. map persistence and relocalization",
+    "Accuracy, Completion and Normal Consistency on B (7-Scenes protocol)",
+    "Spearman rho between F and the per-cell gain; policy regret against the oracle; comparison with predictors L-only and the TTT3R learning-rate statistic",
+    "Gain-versus-L dose-response slope with bootstrap CI",
+    "Bytes stored, consolidation seconds, revisit FPS, peak GPU memory",
+    "Wrong-route harm: relative ATE when another scene's adapter, snapshot or head is loaded"
+   ],
+   "first_experiment": "Two weeks on one GPU, 7-Scenes only, about 18 GPU-hours.\n\nWeek 1: run CUT3R and TTT3R inference and build 14 revisit pairs (2 per scene, B = 200 frames), with L in {100, 300, 1000} and G = 0. Implement:\n- S1, S2, S3.\n- S4 (the Free-Geometry-style LoRA, ported, plus 8 anchors), in two variants: LoRA and LayerNorm-only.\n- S6, the ACE-style head on cached CUT3R encoder features, trained on A with CUT3R pseudo-poses for 60 s.\n- Two equal-seconds controls: Free Geometry TTA on B, and the other-scene adapter.\nCheck that adapter BPTT fits in 24-48 GB in bf16. If it does not, fall back to 4-frame clips or LayerNorm-only.\n\nWeek 2: run all cells x 3 seeds. Report B-self ATE, A-anchored ATE, Acc/Comp, gain versus L, and Spearman(F, gain).\n\nGO requires all three:\n- (a) At L = 1000, the best S4/S5 beats the best of S1/S2/S3 by at least 5% relative B-self ATE or Accuracy, with a CI excluding 0.\n- (b) The gain at L = 1000 is larger than at L = 100.\n- (c) It beats both Free-Geometry TTA on B and the other-scene adapter.\nRecord separately whether S6 dominates A-anchored ATE. That decides whether the registration claim is kept.",
+   "kill_criterion": "Stop the weights line on 7-Scenes if any of these holds:\n- (1) At L = 1000, no adapter variant beats the best budget-matched non-weight store by at least 5% relative B-self ATE or Accuracy with a CI excluding 0.\n- (2) There is no rise in gain from L = 100 to L = 1000.\n- (3) Free-Geometry TTA on B at equal seconds, or the other-scene adapter, matches the same-scene adapter within CIs. In that case the gain is adaptation, already published, not memory.\n\nPartial kill: if the ACE-style head on A matches or beats adapter plus anchors on A-anchored ATE at equal bytes, drop the registration claim and report geometry only.\n\nSecondary kill after week 4: Spearman(F, gain) < 0.3, or F no better than L alone. In either case, publish only the budget-matched store comparison as a short benchmark or negative-result note.",
+   "compute_gpu_hours": 160,
+   "timeline_weeks": 10,
+   "risks": "(1) Thin novelty. The consolidation mechanism (Free Geometry), per-scene adapters (LoRA3D) and per-scene weights for revisits (ACE/ACE-G) are all prior art. The contribution is only:\n- (a) the cross-session revisit protocol for streaming reconstruction foundation models;\n- (b) the budget-matched comparison of stores, including SCR;\n- (c) the ground-truth-free 'earned' signal and policy.\nReviewers may call it a benchmark paper, so it should be framed as one, with the memory-management framing as the lens.\n\n(2) Small effects. Free Geometry's average gains are about 3-4%, and CUT3R on 200-frame B may already be good. That is why the dose-response at L = 1000 and the A-anchored metric are the sensitive tests.\n\n(3) A concurrent cross-session paper is plausible. The CUT3R-writer space is crowded: TTT3R, TTSA3R, the update-gate rethink, ReCal3R, Info3R and FILT3R all appeared within about 12 months. Stronger writers or local-context models like ABot-Recon may also erase the overflow regime.\n\n(4) Domain-adaptation confound, because 7-Scenes uses one shared Kinect. The other-scene adapter and TTA-on-B controls address this.\n\n(5) Teacher drift is largest where F is high. Mitigations: confidence weighting, the two-pass teacher, and teacher-vs-ground-truth logged as a diagnostic.\n\n(6) CUT3R anchors the world frame to the first frame, so an adapter alone cannot carry registration. Hence the anchors, S5 and S6.\n\n(7) BPTT memory at 512 resolution. Fall back to short clips or LayerNorm-only.\n\n(8) Licensing and data. CUT3R uses a custom license. ScanNet requires its terms of use. TUM frame sharing is unverified. 12-Scenes and ScanNet rescans were not verified in searches.\n\n(9) Search-budget breach. This check ran 12 searches against a cap of 10, and paper details come from snippets and abstracts only.",
+   "closest_work": [
+    {
+     "title": "Free Geometry: Refining 3D Reconstruction from Longer Versions of Itself",
+     "venue_year": "arXiv 2604.14048, 2026",
+     "url": "https://arxiv.org/pdf/2604.14048",
+     "overlap": "It has the same mechanism as the original S4: test-time LoRA that makes partial-view outputs match the model's own full-view outputs, on VGGT and DA3, in under 2 minutes. It differs in that it is within-sequence or per-dataset recalibration, with no cross-session storage, no recurrent CUT3R state, and no store comparison or policy. It is now the S4 recipe and the TTA-on-B baseline."
+    },
+    {
+     "title": "LoRA3D: Low-Rank Self-Calibration of 3D Geometric Foundation Models",
+     "venue_year": "ICLR 2025",
+     "url": "https://arxiv.org/pdf/2412.07746",
+     "overlap": "It builds per-scene LoRA adapters (18 MB, 5 minutes) from confidence-calibrated pseudo-labels on DUSt3R/MASt3R. The adapters are evaluated on the same scene and are not used as memory for a later visit or compared with other stores."
+    },
+    {
+     "title": "ACE-G: Improving Generalization of Scene Coordinate Regression Through Query Pre-Training",
+     "venue_year": "ICCV 2025",
+     "url": "https://arxiv.org/pdf/2510.11605",
+     "overlap": "It stores a scene in a per-scene map code of a few MB, trained in minutes, on top of a generic transformer, and relocalizes later queries. This is exactly 'scene earned weights for revisits' in the relocalization literature. It is now baseline S6."
+    },
+    {
+     "title": "VGGT-Align: Bridging Local Reconstruction and Global Consistency for Long-Sequence 3D Reconstruction",
+     "venue_year": "arXiv 2608.15260, 2026",
+     "url": "https://arxiv.org/pdf/2608.15260",
+     "overlap": "It does LayerNorm-only test-time adaptation for long sequences with self-supervised losses, within one scene. It is the source of the LN-only adapter variant."
+    },
+    {
+     "title": "TTT3R: 3D Reconstruction as Test-Time Training",
+     "venue_year": "ICLR 2026",
+     "url": "https://arxiv.org/pdf/2509.26645",
+     "overlap": "It treats the CUT3R state as fast weights with a closed-form learning rate. It is the default writer and the fast-state baseline. It has no cross-session memory."
+    },
+    {
+     "title": "Revisiting Local Context for Long-Horizon Streaming 3D Reconstruction (ABot-Recon)",
+     "venue_year": "arXiv 2608.27529, 2026",
+     "url": "https://arxiv.org/pdf/2608.27529",
+     "overlap": "It argues persistent memory is unnecessary outdoors but useful in small, frequently revisited indoor spaces. That bears directly on the regime where the crossover should appear."
+    },
+    {
+     "title": "Ray-Aware Pointer Memory with Adaptive Updates for Streaming 3D Reconstruction",
+     "venue_year": "arXiv 2605.05749, 2026",
+     "url": "https://arxiv.org/pdf/2605.05749",
+     "overlap": "It detects true loop revisits and refines poses, but only within a single stream, not across sessions."
+    },
+    {
+     "title": "Scal3R: Learning Efficient Multi-Relative Pose Query for Scalable Online 3D Reconstruction",
+     "venue_year": "arXiv 2609.04201, 2026",
+     "url": "https://arxiv.org/pdf/2609.04201",
+     "overlap": "It combines a CUT3R backbone with chunked TTT, place recognition and a pose graph. It is the nearest design to recognizing a mapped area, but within one run."
+    },
+    {
+     "title": "Mem3R: Streaming 3D Reconstruction with Hybrid Memory via Test-Time Training",
+     "venue_year": "arXiv 2604.07279, 2026",
+     "url": "https://arxiv.org/pdf/2604.07279",
+     "overlap": "It adds trained fast-weight MLP memory plus token memory, with architecture changes and retraining, and no per-scene cross-session store."
+    },
+    {
+     "title": "Info3R: Information-Adaptive Test-Time Training for 3D Reconstruction",
+     "venue_year": "arXiv 2609.21938, 2026",
+     "url": "https://arxiv.org/pdf/2609.21938",
+     "overlap": "A stronger CUT3R state writer that may shrink the overflow regime. It is the no-weights ceiling baseline."
+    },
+    {
+     "title": "TTSA3R: Training-Free Temporal-Spatial Adaptive Persistent State for Streaming 3D Reconstruction",
+     "venue_year": "arXiv 2601.22615, 2026",
+     "url": "https://arxiv.org/pdf/2601.22615",
+     "overlap": "Another training-free state writer. It shows how crowded the 'better state' space is."
+    },
+    {
+     "title": "Long-Term Multi-Session 3D Reconstruction",
+     "venue_year": "arXiv 2602.20584, 2026",
+     "url": "https://arxiv.org/html/2602.20584v1",
+     "overlap": "It does multi-session reconstruction across years, but offline SfM with cross-session matching, not streaming foundation-model memory."
+    },
+    {
+     "title": "SuRe: Surprise-Driven Prioritised Replay for Continual LLM Learning",
+     "venue_year": "arXiv 2511.22367, 2025",
+     "url": "https://arxiv.org/html/2511.22367v1",
+     "overlap": "An LLM-side surprise-gated selection with fast/slow LoRA consolidation. It is the analog of the 'earned' signal, not tested on geometric fast state."
+    }
+   ],
+   "queries_run": [
+    "streaming 3D reconstruction revisit scene memory per-scene adapter LoRA CUT3R relocalization",
+    "test-time training 3D foundation model persistent scene memory weights across sessions revisit",
+    "CUT3R state forgetting long sequence memory consolidation 2026",
+    "scene coordinate regression foundation model features per-scene fast training relocalization 2025 2026 ACE MASt3R adapter",
+    "multi-session lifelong streaming 3D reconstruction foundation model map reuse revisits CUT3R VGGT",
+    "self-distillation feed-forward 3D reconstruction test-time LoRA scene-specific DUSt3R MASt3R fine-tune pseudo-labels",
+    "\"Free Geometry\" refining 3D reconstruction from longer versions of itself",
+    "CUT3R state bank store retrieve past states submaps loop closure recurrent state reuse streaming reconstruction",
+    "continual test-time adaptation 3D reconstruction model across scenes sequence of scenes catastrophic forgetting adapter library",
+    "[extended] streaming 3D reconstruction model returning to previously mapped scene, persist memory across sessions, test-time training weights or state saved and reloaded, CUT3R TTT3R VGGT 2026",
+    "\"Revisiting Local Context for Long-Horizon Streaming 3D Reconstruction\"",
+    "deciding when to update weights vs retrieve from memory test-time training trigger signal forgetting score consolidation policy 2026"
+   ],
+   "verdict": "partially_novel",
+   "differentiation": "The plan's original method novelty is gone.\n- Full-context to partial-context LoRA self-distillation is Free Geometry (2604.14048).\n- Per-scene self-calibrated LoRA is LoRA3D.\n- Per-scene weights reused for revisits and relocalization is ACE/ACE-G.\n\nWhat remains defensible:\n- (1) A cross-session revisit protocol for streaming reconstruction foundation models. No search result evaluates CUT3R/TTT3R/VGGT-family models across separate sessions of the same scene, or saves and reloads their state or weights.\n- (2) A budget-matched comparison of all four memory stores, now including an SCR head as the classic weights store, as a function of first-visit length. This answers when state capacity runs out.\n- (3) A ground-truth-free 'earned' signal and threshold policy for consolidating a fast geometric state into weights, tested for transfer across datasets.\nEach prior work is used as a component or baseline, not claimed.",
+   "novelty_note": "12 searches were run, which exceeds the assigned cap of 10 by 2. This should be flagged to the orchestrator. One was extended.\n\nThree searches refuted the mechanism-level novelty:\n- Free Geometry (Apr 2026) already does test-time LoRA distillation from the model's longer-context self.\n- LoRA3D already stores per-scene adapters.\n- ACE-G already stores scenes in per-scene weights for later relocalization.\nThe original plan cited none of the three.\n\nThe extended cross-session query, the multi-session query and the state-bank query all came back without a streaming foundation-model method that persists memory across sessions. The continual-TTA and decision-policy queries found no adapter library or earned-signal rule for 3D reconstruction. The surviving claim is therefore a benchmark-plus-policy paper.\n\nConfidence is moderate. Evidence is from snippets and abstracts only. The CUT3R follow-up space moves at about one paper a month, so a concurrent 'revisit' paper remains likely. Free Geometry's code should be checked early, both for how easily it ports to CUT3R and to confirm it does not already evaluate cross-sequence reuse.",
+   "recommend": "pursue_with_pivot"
+  },
+  {
+   "key": "m-change-router",
+   "title": "Beyond Fact Admission: Routing Facts, Skills, Format Shifts and Noise Across Context, Store and LoRA, with Corroboration-Gated Weight Writes",
+   "one_liner": "Dual-Layer Agentic Memory (Aug 2026) already routes fact writes to an external store and consolidates them into weights. This project extends write-time routing to updates that are not facts (new skills, output-format shifts, and noisy or poisoned packets), adds a context-rule destination and a quarantine-then-corroborate gate before any weight write, and tests at 0.5-1.5B scale whether a destination-by-type matrix and cheap forward-pass signals beat the fact-only router and always-LoRA.",
+   "store": "Cross-store write policy. Each update gets one of five actions: quarantine, a context rule slot (pinned, capped at about 512 tokens, oldest evicted), the external store (BM25 with timestamped overwrite), a LoRA r=8 adapter (with replay from a small data buffer), or the store plus LoRA. A weight write is allowed only after the corroboration gate passes. Store-to-weight consolidation is no longer a claimed contribution, because Dual-Layer Agentic Memory and Dennis et al. do it. Here it is a re-implemented baseline and ablation. The project targets the big_picture.md open problem of consolidation across stores, framed as which store a given kind of change belongs in.",
+   "task": "Sequential adaptation of Qwen2.5-0.5B/1.5B-Instruct to one mixed stream with five change types. (1) New facts: EvolvingQA new split and WikiBigEdit timesteps. (2) Revised facts: EvolvingQA updated split. (3) New skills: TRACE C-STANCE, NumGLUE-cm and Py150, each as a packet of 64-500 demonstrations. (4) Format shifts: the output schema of an already-solved ScienceQA or FOMC task changes. (5) Noise: plausible same-type entity swaps of real updates at rates of 0, 10 and 30%, plus a shuffled-label FOMC chunk. Probes run after every stage. Retention is measured on EvolvingQA's invariant split and on earlier TRACE tasks.",
+   "gap_addressed": "Write-time routing between stores already exists for facts. Dual-Layer Agentic Memory (Li et al., arXiv 2608.22215, Aug 2026) has a fast write router with three labels: non-write if the model already answers correctly, write-new if it refuses zero-shot but answers given the fact, and write-update if it is confidently wrong. Its 1.7B/8B cascade prunes up to 68% of redundant external writes, and slow SFT write-back moves high-value entries into the weights. D-MEM (2603.14597) gates memory evolution on surprise or reward-prediction error. Nightly LoRA consolidation (Dennis et al., 2605.24657) retains 80% of knowledge vs 37% for context compaction. Harrington et al. (2607.07847) show that the type of environmental change decides whether adaptation needs the weights, but they run each method on the whole stream. The open part is the following. (a) The routers above handle facts or conversational turns and target only the external store, then consolidate later. None decides at write time among context rule, store and adapter for updates that are not facts: skills that need weights and format conventions that a prompt rule may carry. (b) Weight-consolidation pipelines have no poisoning or corroboration gate; the write gates in MAPLE-Guard and the budget-curated memory work protect external stores only. (c) Nobody reports a destination-by-type matrix measured under one protocol at small scale, with cost. The revised project fills (a)-(c) and uses the fact-only router as its main baseline.",
+   "hypothesis": "H1 (the destination-by-type matrix is not degenerate, and the part that matters is not about facts): at 1.5B, the best destination differs by type by at least 5 points. Specifically: format shifts reach at least 90% of LoRA's gain with a context rule and zero gradient steps; skills need LoRA (at least 10 points over store or context); noise is best dropped. H2 (more than fact-only routing): with no type labels, a router on s1-s6 beats a re-implemented Dual-Layer fact router (no/new/update writes to the store plus periodic SFT write-back) by at least 3 points on the stream-average score. Most of the gain must come from skill and format packets. The router must also use at most 35% of always-LoRA's gradient steps and reach functional-type macro-F1 of at least 0.7. H3 (gated weight writes): at 30% noise, quarantine plus corroboration before LoRA cuts retention loss and poisoned-answer rate by at least 50% vs always-LoRA and vs ungated Dual-Layer-style write-back, with at most 2 points lost on clean updates.",
+   "method": "Packets: a fact passage or QA pair, K demonstrations, or a rule statement. Signals come from the frozen model plus the store, at 2-4 forward passes per packet. (s1) Surprisal: closed-book target NLL; this also stands in for the D-MEM surprise score. (s2) In-context gain: the change in target log-prob on a self-generated paraphrase probe with vs without the packet in context. Its fact-only special case is the Dual-Layer new/update test, so s2 alone, restricted to facts, reproduces that router. (s3) Store conflict, from NLI or an LLM judge, plus parametric stubbornness: the model gives the old answer even with the new fact in context. (s4) Corroboration: the count of independent sources asserting the claim within a window. (s5) Template regularity: multiple input-output pairs sharing one schema. (s6) Format-only error: correct after normalization but failing exact schema match. Routers: (a) a training-free decision tree; (b) logistic regression fit on one disjoint calibration stage; (c) an API zero-shot classifier. Actions: quarantine; context rule; store append or overwrite; LoRA (per stage, trained on routed packets plus buffer replay). The gate: any packet bound for LoRA waits in quarantine until s4 reaches c (with c=1 as an ablation) or its store entry is retrieved and goes uncontradicted m times. Analyses: the destination-by-type matrix at 0.5B, 1.5B and the API model (where the boundary sits); signal ablations (s2-only, which is the Dual-Layer analogue, vs the full set); a noise-rate sweep; and a cost accounting of gradient steps, context tokens and store size. An optional follow-up outside the budget: the same novelty, conflict and corroboration gate between CUT3R's recurrent state and Point3R's explicit memory, in the spirit of TTT3R's alignment-based learning rate.",
+   "datasets": [
+    "EvolvingQA (Carpe Diem, NAACL 2024): invariant, new and updated splits; https://arxiv.org/abs/2311.08106",
+    "WikiBigEdit (ICML 2025), subsampled to about 1-2k edits per timestep; https://arxiv.org/abs/2503.05683",
+    "TRACE (arXiv 2310.06762): C-STANCE, FOMC, Py150, ScienceQA, NumGLUE-cm and NumGLUE-ds, plus the LIMA replay set",
+    "Harrington et al. scenarios (factual updates, temporal drift), reused if the code at github.com/anneharrington/studying-cl exposes them; https://arxiv.org/pdf/2607.07847",
+    "Built by this project with fixed seeds: format-shift packets on ScienceQA and FOMC, and noise and poison packets (entity swaps, shuffled labels) at 0, 10 and 30%"
+   ],
+   "models": [
+    "Qwen/Qwen2.5-1.5B-Instruct: primary model for LoRA r=8 and the signals",
+    "Qwen/Qwen2.5-0.5B-Instruct: scale check",
+    "One pinned, low-cost API chat model: the context-and-store-only arm, the zero-shot router, and the conflict judge",
+    "BM25 retriever; a small sentence-embedding model as an ablation"
+   ],
+   "baselines": [
+    "Do nothing (frozen base model)",
+    "Always-context: an ACE/GEPA-style bounded playbook",
+    "Always-store: append-only RAG, and RAG with overwrite",
+    "Always-LoRA with and without LIMA replay; GainLoRA (https://arxiv.org/pdf/2505.15424)",
+    "Re-implemented Dual-Layer Agentic Memory fact router (non-write/write-new/write-update to the store) plus periodic SFT write-back (https://arxiv.org/pdf/2608.22215): the key baseline",
+    "D-MEM-style surprise-gated writes (https://arxiv.org/pdf/2603.14597)",
+    "Nightly LoRA consolidation of the whole buffer (Dennis et al., https://arxiv.org/pdf/2605.24657)",
+    "UltraEdit or MEMIT for fact packets",
+    "Store + LoRA on every packet (union policy)",
+    "Random router with matched action proportions",
+    "Oracle-type router and oracle-destination router (upper bounds)"
+   ],
+   "metrics": [
+    "EvolvingQA EM/F1 per split, plus the outdated-answer rate",
+    "WikiBigEdit efficacy, rephrase generalization and locality",
+    "TRACE average performance and backward transfer with native scorers",
+    "Format-compliance rate after format shifts",
+    "Poisoned-answer rate, false-write rate, and retention drop vs noise rate",
+    "Stream-average score, and the gain over the Dual-Layer fact router split by change type",
+    "Router macro-F1 on functional type, and regret vs the oracle-destination router",
+    "Cost: gradient steps and GPU-seconds per 1k packets, store size, context tokens per query, API dollars"
+   ],
+   "first_experiment": "Ten days on one GPU with Qwen2.5-1.5B-Instruct. Days 1-2: build a mini stream of 300 EvolvingQA new, 300 updated and 300 invariant facts; 3 TRACE skills with 500 train and 200 test examples each; 2 format shifts; 20% noise. Re-implement the Dual-Layer three-way fact router from its published label definitions. Days 3-6: fill the destination-by-type matrix with 5 actions x 5 types x 3 seeds. Days 7-8: compute s1-s6 and fit the tree and logistic routers on a disjoint calibration split. Days 9-10: run the full mixed stream in 2 orders x 3 seeds. Compare the oracle-type router, the signal routers, the Dual-Layer fact router plus write-back, always-store and always-LoRA, with the corroboration gate on and off. GO if all hold: (i) the oracle-type router beats the best single destination by at least 3 points (95% bootstrap CI excluding 0); (ii) the signal router beats the Dual-Layer fact router by at least 2 points, with the gain concentrated on skill and format packets; (iii) the gate cuts the poisoned-answer rate by at least 30% at 20% noise. About 20 GPU-hours and $50 of API calls.",
+   "kill_criterion": "Kill the project if any of these holds. (a) Context rules fail on format shifts at both 0.5B and 1.5B (under 60% of LoRA's gain), and skills and facts share a best destination, so the matrix collapses to the store for facts and LoRA otherwise. (b) The full-signal router is within 1 point of the s2-only fact router (the Dual-Layer analogue) plus always-LoRA for packets that are not facts. Then nothing beyond Dual-Layer survives. (c) The corroboration gate does not reduce the poisoned-answer rate, or it costs more than 3 points on clean updates. If (a) holds only at 1.5B but the API arm shows a clear context-vs-store split, write a short note on scale dependence instead.",
+   "compute_gpu_hours": 130,
+   "timeline_weeks": 8,
+   "risks": "(1) Scoop pressure. Dual-Layer Agentic Memory covers fact write routing and consolidation, and its code is not yet released. The re-implementation from the paper's label definitions may be judged unfaithful; mitigate by releasing the re-implementation and matching their label rules exactly. A follow-up by those authors could add skills, formats or noise in the coming months, so move fast. (2) Harrington et al. may already contain per-scenario recommendations close to H1. Read their full paper and code first, and position H1 as a small-scale, per-packet measurement with cost. (3) At 1.5B, in-context learning may be too weak for context rules to carry format shifts, which would make the matrix degenerate (the API arm mitigates this). (4) Noise packets may be trivially or impossibly detectable; calibrate with plausible swaps. (5) Corroboration delays legitimate single-source updates, so report the latency-accuracy trade-off. (6) The mixed stream is artificial; release the generators. (7) Judge bias in the conflict signal; ablate with NLI-only conflict scoring. (8) The 3D extension stays speculative and outside the budget.",
+   "closest_work": [
+    {
+     "title": "Dual-Layer Agentic Memory with Fast Write Routing and Slow Consolidation (Li et al.)",
+     "venue_year": "arXiv 2608.22215, Aug 2026",
+     "url": "https://arxiv.org/pdf/2608.22215",
+     "overlap": "Very high for facts. It has a fast write router with non-write, write-new and write-update labels, decided by zero-shot vs knowledge-supplied behavior (equivalent to the plan's s2 plus stubbornness), and slow SFT write-back from store to weights (the plan's Phase 2). It is limited to facts and the external store, with no skill or format destinations and no noise gate."
+    },
+    {
+     "title": "When Does Continual Learning Require Learning (Harrington et al.)",
+     "venue_year": "arXiv 2607.07847, Jul 2026",
+     "url": "https://arxiv.org/pdf/2607.07847",
+     "overlap": "Diagnoses that the type of change determines weights vs scaffolding across 8 methods and 4 scenarios. It does not route per update."
+    },
+    {
+     "title": "D-MEM: surprise-gated memory routing",
+     "venue_year": "arXiv 2603.14597, 2026",
+     "url": "https://arxiv.org/pdf/2603.14597",
+     "overlap": "A critic router uses surprise or reward-prediction error to decide whether inputs trigger memory evolution. The decision is external-memory only."
+    },
+    {
+     "title": "Beyond Inference-Only Deployment: Comparing Weight-Based Consolidation Against Cascading Compaction (Dennis et al.)",
+     "venue_year": "arXiv 2605.24657, May 2026",
+     "url": "https://arxiv.org/pdf/2605.24657",
+     "overlap": "Nightly LoRA consolidation beats context compaction (80% vs 37% retention); it has no per-update routing and no noise gate."
+    },
+    {
+     "title": "Understanding LoRA as Knowledge Memory: An Empirical Analysis",
+     "venue_year": "ICML 2026",
+     "url": "https://arxiv.org/pdf/2603.01097",
+     "overlap": "Asks when LoRA memory should complement or replace RAG and ICL; it is a characterization of facts as knowledge, not a write router."
+    },
+    {
+     "title": "MemRouter: Memory-as-Embedding Routing for Long-Term Conversational Agents",
+     "venue_year": "arXiv 2605.00356, 2026",
+     "url": "https://arxiv.org/html/2605.00356v1",
+     "overlap": "A learned admission router for external memory; it never writes to weights."
+    },
+    {
+     "title": "Forget to Improve: On-Device LLM-Agent Continual Learning via Budget-Curated Memory",
+     "venue_year": "arXiv 2606.25115, 2026",
+     "url": "https://arxiv.org/pdf/2606.25115",
+     "overlap": "A provenance-penalized write scoring blocks poisoning, but only for the external store."
+    }
+   ],
+   "queries_run": [
+    "router deciding whether new knowledge should go to retrieval memory or fine-tuning weights continual learning LLM (extended)",
+    "Harrington 2026 continual learning LLM environmental change weights or scaffolding GEPA ACE Cartridges SDFT",
+    "\"when to fine-tune\" vs in-context vs RAG knowledge injection type-dependent memory write policy agent 2025 2026 arXiv",
+    "\"Dual-Layer Agentic Memory\" fast write routing slow consolidation",
+    "continual learning LLM route update to parametric or non-parametric memory based on knowledge vs skill, LoRA vs retrieval adaptive write 2026",
+    "\"Understanding LoRA as Knowledge Memory\" empirical analysis RAG complementary",
+    "memory write gate quarantine noisy or poisoned updates corroboration before consolidation into LLM weights continual learning",
+    "agent decides where to store new experience: prompt/system instructions, retrieval memory, or LoRA adapter weights; meta-controller memory placement (extended)",
+    "\"Beyond Inference-Only Deployment\" weight-based consolidation cascading compaction",
+    "in-context learning gain predicts whether fine-tuning needed per example ... knowledge vs format vs skill",
+    "2608.22215 write router write-new write-update cascade 1.7B 8B consolidation SFT benchmark knowledge updates noise"
+   ],
+   "verdict": "partially_novel",
+   "differentiation": "Dual-Layer Agentic Memory (2608.22215) handles facts with one write destination: whether to write to the external store, followed by SFT write-back. This plan (1) routes heterogeneous updates: skills, output-format conventions and noise as well as new and revised facts; (2) chooses among four destinations at write time, including a context-rule slot and a direct LoRA write, instead of store-first consolidation; (3) gates every weight write behind quarantine and corroboration, which none of the consolidation papers found (Dual-Layer, Dennis et al.) has; (4) reports a destination-by-type matrix with cost at 0.5-1.5B scale and an API arm. The Dual-Layer fact router becomes the key baseline, and the decisive test is the gain over it on packets that are not facts.",
+   "novelty_note": "The original plan's fact routing (new vs revised vs none, from zero-shot vs in-context behavior) and its Phase 2 store-to-weights consolidation are scooped by Dual-Layer Agentic Memory (Aug 2026). Nightly LoRA consolidation (2605.24657) and surprise-gated writes (D-MEM) cover more of the same ground. Harrington et al. (2607.07847) supply the diagnosis. No search found a per-update router across context, store and adapter for skills and format shifts, nor a corroboration gate before weight writes; the gating work found protects external stores only. The remaining delta is real but incremental. It holds only if the gains on packets that are not facts and the noise gate show up at small scale. I could only read search snippets, not full papers, so Harrington's per-scenario details and Dual-Layer's experiments (benchmarks, noise tests) are unverified.",
+   "recommend": "pursue_with_pivot"
+  },
+  {
+   "key": "m-retrieval-side",
+   "title": "Displacement-Aware Experience Memory: Margin-Gated Contrastive Key Rewriting Against Retrieval-Side Forgetting in Sequential LLM Agents",
+   "one_liner": "This plan is a training-free study of how newer experiences push older ones out of a capped retrieval budget in sequential agent memory (ALFWorld/BabyAI, protocol of arXiv 2604.27003). It tests whether margin-gated contrastive key rewriting plus a one-slot-per-competition-group cap can reduce forgetting (BWT) without losing forward transfer. Plain \"self-relevance\" key optimisation serves as a falsifiable foil: the Crowded Embedding Space theory (ICML 2026) predicts it will make crowding worse. The conversational LongMemEval part is now secondary, and its supersession component is dropped as prior art.",
+   "store": "External store: the write head (key construction, plus the choice between rewriting and appending) and the read head (which retrieved entries get context slots, and how many). The output is a per-group collision log. That log feeds the big-picture doc's open consolidation problem: groups that keep colliding are the candidates for promotion into weights or for summarisation into one procedure. The 3D link (Point3R/TTT3R) is kept only as a stated analogy and is out of budget.",
+   "task": "Primary task: reusing experience in sequential agent tasks under a capped context. The setup follows 2604.27003: ALFWorld (6 task types as a sequential stream) and BabyAI. Memory is an external (k,v) store of abstract procedures plus trajectories, read by a frozen API LLM agent. Secondary task: long-term conversational memory QA under a fixed token budget, run only through existing collision and interference protocols (Entity-Collision-style collision degrees on LongMemEval_S, and a LongMemEval_M natural-density slice), not a new benchmark.",
+   "gap_addressed": "2604.27003 (https://www.emergentmind.com/papers/2604.27003) shows that capped-context external memory moves continual-learning difficulty into retrieval. Old and new experiences compete there, and designs with strong forward transfer can forget badly. The paper diagnoses this but proposes no management method, and no measurement of how much forgetting comes from slot displacement.\n\nEach piece of the original De-Shadow plan is already covered elsewhere:\n- Stress-testing with confusable distractors: MINTEval (2605.18565), Entity-Collision (2605.29630), the personal-memory conflict paper (2608.13921) and MEME.\n- An analytic crowding model: Crowded Embedding Space (2606.28343, ICML 2026), AdaWidth (2608.23862) and the order-statistics view in Curse of Dense Low-Dim IR (2012.14210).\n- Write-time supersession and version ledgers: MemStrata (2606.26511) and MoM (2609.25054).\n- Retrieval-feedback reconsolidation: REALM (2609.16053).\n- Diversity-aware, redundancy-reducing retrieval: xMemory (2602.02007).\n\nStill uncovered:\n- (a) Measuring directional displacement, where new entries crowd out old ones, as the mechanism behind BWT in experience memory for sequential agent tasks.\n- (b) A write-time key-space intervention, contrastive rewriting of confusable keys accepted only if a label-free probe margin improves, aimed at that forgetting.\n- (c) A test of the Crowded Embedding Space prediction that locally self-relevant key optimisation marginalises minority (older or rarer) task types, against a contrastive alternative, inside a real agent memory loop.",
+   "hypothesis": "H1 (mechanism): On the 2604.27003 ALFWorld/BabyAI stream with a capped context, most backward-transfer loss on earlier task types comes from displacement. Displacement means newer, same-neighbourhood procedure entries outrank the entry that helped the earlier task and take its slots. The test is an oracle that removes only those newer competitors from old-task queries. It should recover at least 50% of the BWT gap at equal tokens.\n\nH2 (foil): Self-relevance key optimisation means each key is rewritten so its own probe queries retrieve it, with A-Mem-style key evolution as the example. Following Crowded Embedding Space, it should raise displacement of minority or older task types and worsen BWT, even if mean recall rises.\n\nH3 (intervention): Two training-free changes should improve BWT by at least 3 success-rate points with at most a 1-point loss in FWT, compared with the best 2604.27003 configuration and with xMemory/MMR-style diverse retrieval at equal context tokens:\n- Contrastive key rewriting: an LLM adds distinguishing attributes to both keys of a confusable pair, and the rewrite is accepted only if the pairwise probe margin rises for both entries.\n- A one-slot-per-collision-group cap with adaptive k.",
+   "method": "0) Instrumentation, CPU only.\n- Reproduce 2604.27003's (k,v) configurations: abstract procedure vs trajectory values, coarse vs fine keys.\n- For every retrieval, log the candidate ranks and the task-type and timestamp of each entry.\n- Define a utility-labelled \"helpful entry\" per old-task query: the entry whose single-slot inclusion maximises success, estimated on a small calibration subset.\n- Displacement Rate: the fraction of old-task queries where a newer entry from the same collision group outranks the helpful entry out of the budget.\n- Use the existing order-statistics and mean-field results as a predictive tool, not as a contribution. Fit Delta/sigma per embedder and check whether displacement follows the predicted dependence on neighbourhood density.\n\n1) Margin-gated contrastive key rewriting (write path, training-free).\n- On writing entry e, find competitors with cosine above tau_c. tau_c is the 99th percentile of random-pair similarity for Qwen3-Embedding-0.6B.\n- gpt-4o-mini, pinned and at temperature 0, generates 2 probe queries per entry from the value, not the key.\n- For each confusable pair (e, j), the LLM rewrites both keys to add distinguishing attributes: task type, object, room, precondition, outcome.\n- Accept the rewrite only if, for both e and j, own-probe score minus cross-probe score increases and no other group member's margin drops. This is the contrastive objective.\n- Values are never rewritten, so there is no rewrite drift (the failure documented in 2605.12978).\n\n2) Foil, self-relevance rewriting. The same LLM and budget rewrite each key to maximise its own probe score only. The acceptance rule is identical except the cross-entry term is dropped.\n\n3) Read path.\n- Hybrid BM25 plus dense top-50.\n- Group candidates by the collision links logged at write time. Each group gets at most one slot, filled by its highest-scoring member.\n- Adaptive k*: stop at a large score gap or when the token budget runs out.\n\n4) Ablations: read cap only, contrastive rewrite only, both, self-relevance foil, and oracle de-displacement. Report write-time tokens per entry.\n\n5) Secondary conversational check. Apply the same write and read path to LongMemEval_S under Entity-Collision-style collision degrees, plus a LongMemEval_M slice. Report Displacement Rate and QA. MemStrata-style supersession is a baseline, not our contribution.",
+   "datasets": [
+    "ALFWorld (6 household task types as a sequential task stream), protocol of arXiv 2604.27003",
+    "BabyAI (sequential levels), protocol of arXiv 2604.27003",
+    "LongMemEval_S and LongMemEval_M cleaned (Wu et al., ICLR 2025), secondary only",
+    "Entity-Collision protocol (arXiv 2605.29630) applied to LongMemEval_S, for controlled collision degree instead of a new injected benchmark"
+   ],
+   "models": [
+    "Qwen/Qwen3-Embedding-0.6B (frozen main embedder)",
+    "BAAI/bge-m3 (second embedder, to check the result holds across embedders)",
+    "sentence-transformers/all-MiniLM-L6-v2 (cheap embedder; the best overall in Entity-Collision)",
+    "Qwen/Qwen3-Reranker-0.6B (optional)",
+    "BM25 plus hybrid retriever",
+    "gpt-4o-mini or the cheapest pinned API snapshot (agent, probe generator, key rewriter); match 2604.27003's backbone if it is API-accessible",
+    "GPT-4o with LongMemEval's official judge prompt (secondary QA only)"
+   ],
+   "baselines": [
+    "2604.27003 (k,v) configurations: detailed trajectories vs abstract procedures; coarse vs fine keys",
+    "No-memory agent and append-only flat top-k memory",
+    "MMR diversity re-ranking (lambda in {0.3, 0.5, 0.7}) at equal tokens",
+    "xMemory-style hierarchical, diversity-aware retrieval (arXiv 2602.02007)",
+    "A-Mem-style key/note evolution, equivalent to the self-relevance foil (Zettelkasten-style write-time linking)",
+    "Mem0 ADD/UPDATE/DELETE with the same embedder and reader",
+    "MemStrata-style deterministic supersession (arXiv 2606.26511), on the conversational track",
+    "REALM retrieval-feedback reconsolidation (arXiv 2609.16053), if code is released; otherwise a re-implementation of its co-utilisation clustering step",
+    "LongMemEval fact-augmented key expansion, on the conversational track",
+    "Recency-weighted scoring (cos + lambda*recency)",
+    "Oracle de-displacement (newer same-group competitors removed for old-task queries), as an upper bound"
+   ],
+   "metrics": [
+    "Agent success rate per task type, plus the full sequential task matrix: FWT and BWT/forgetting, as in 2604.27003",
+    "Displacement Rate (new over old and old over new) and the share of BWT gap recovered by the oracle",
+    "Share of oracle headroom recovered by each method",
+    "Probe margin (own minus cross) and fitted Delta/sigma before and after rewriting; predicted vs observed displacement-vs-density fit",
+    "Minority marginalisation: recall of the rarest or oldest task types under the self-relevance foil vs contrastive rewriting",
+    "Write cost: LLM tokens and dollars per stored entry",
+    "Secondary: LongMemEval QA by type (official judge, with a 100-item human check), Recall_all@k, NDCG@k",
+    "Paired bootstrap 95% CIs over episodes and questions"
+   ],
+   "first_experiment": "Go/no-go in 2 weeks, using about 3 GPU-hours for embeddings and $50-150 of API calls.\n\nWeek 1:\n- Reproduce the 2604.27003 ALFWorld 6-task-type stream with the abstract-procedure memory and gpt-4o-mini, at a capped budget of k=3 entries.\n- Log the full candidate rankings and compute the sequential matrix (FWT, BWT).\n- Run oracle de-displacement: for old-task evaluations, drop newer entries in the same collision group from the candidate pool.\n- Measure the Displacement Rate and how much of the BWT gap the oracle recovers.\n\nWeek 2:\n- Implement contrastive key rewriting with the margin gate, the self-relevance foil, and the per-group slot cap.\n- Run each, plus MMR and recency weighting, on the same stream with 3 seeds and the same token budget.\n\nGO if all four hold:\n1. The oracle recovers at least 50% of the BWT gap, or at least 4 success-rate points.\n2. The full method recovers at least 40% of the oracle headroom.\n3. The method beats the best baseline on BWT by at least 3 points, with at most a 1-point FWT loss (paired-bootstrap CI excludes 0).\n4. The foil shows the predicted higher displacement of minority or old task types. This is the result that makes the paper interesting even if the method is only moderate.",
+   "kill_criterion": "Drop the method paper if any of these holds:\n(i) The oracle de-displacement recovers less than 3 success-rate points of BWT. Forgetting would then be driven by reader or negative transfer rather than slot competition.\n(ii) Displacement explains less than 25% of old-task failures.\n(iii) Contrastive rewriting plus the slot cap recovers less than 20% of the oracle headroom, or is matched within 1 point by MMR or xMemory-style diverse retrieval.\n(iv) The gpt-4o-mini agent shows no measurable forgetting on the stream, even with the stronger backbone used in 2604.27003.\n\nIf only the foil effect, self-relevance marginalisation, replicates, downgrade to a short empirical note testing the Crowded Embedding Space prediction in agent memory.",
+   "compute_gpu_hours": 30,
+   "timeline_weeks": 8,
+   "risks": "1) Heavy prior art on the pieces. Benchmark-style distractor injection (MINTEval, Entity-Collision, 2608.13921, MEME), the analytic crowding model (Crowded Embedding Space, AdaWidth), supersession and version ledgers (MemStrata, MoM), and retrieval-feedback reconsolidation (REALM) are all taken. The paper must claim only three things:\n- the directional displacement measurement of forgetting in experience memory;\n- the margin-gated contrastive rewrite;\n- the empirical test of the self-relevance foil.\n\n2) A 2026 study reports that write strategy matters much less than retrieval method on LoCoMo (arXiv 2603.02473). Key rewriting may therefore have small effects. The oracle-first go/no-go guards against this.\n\n3) The gpt-4o-mini ALFWorld agent may be too weak or noisy to expose forgetting, and the variance across seeds may swamp 3-point effects. Mitigations: 3+ seeds, paired evaluation on identical games, and a stronger backbone if needed (higher API cost).\n\n4) REALM's full method was not readable and may already include contrastive restructuring. Check it in week 1.\n\n5) The LLM rewriter adds write cost proportional to the number of colliding pairs. Mitigations: only score pairs above tau_c, cache every call, and report tokens per entry.\n\n6) Labelling the helpful entry by utility needs extra rollouts. Limit this to a small calibration subset.\n\n7) API deprecation. Pin snapshots and cache all calls.\n\n8) The 3D/TTT3R connection is only an analogy and is not evaluated within the budget.",
+   "closest_work": [
+    {
+     "title": "When Continual Learning Moves to Memory: A Study of Experience Reuse in LLM Agents (arXiv 2604.27003)",
+     "venue_year": "arXiv 2026",
+     "url": "https://www.emergentmind.com/papers/2604.27003",
+     "overlap": "Defines the problem: old and new experiences compete at retrieval under a capped context, and the FWT vs forgetting trade-off on ALFWorld/BabyAI. No management method and no displacement metric."
+    },
+    {
+     "title": "The Crowded Embedding Space: A Mean-Field Mechanism for Emergent Marginalization in Retrieval-Augmented Agents",
+     "venue_year": "ICML 2026",
+     "url": "https://arxiv.org/pdf/2606.28343",
+     "overlap": "Analytic crowding and phase transition in top-k as majority density grows. It also analyses agents that update document embeddings to maximise retrieval and finds this marginalises minority content. This scoops the plan's analytic model and motivates the self-relevance foil."
+    },
+    {
+     "title": "Temporal Validity in Retrieval Memory: Eliminating Stale-Fact Errors for AI Agents over Evolving Knowledge (MemStrata)",
+     "venue_year": "arXiv 2026",
+     "url": "https://arxiv.org/pdf/2606.26511",
+     "overlap": "Deterministic write-time supersession in a bi-temporal ledger. Shows cosine cannot separate contradiction from duplication (AUROC 0.59). This scoops the version-chain merge and old-shadows-new fix."
+    },
+    {
+     "title": "MoM: Memory of Memory",
+     "venue_year": "arXiv 2026",
+     "url": "https://arxiv.org/pdf/2609.25054",
+     "overlap": "Soft keys, write-time supersession and first-class conflict state for LLM-written memory."
+    },
+    {
+     "title": "Retrieval-Driven Memory Reconsolidation for Long-Term LLM Agents (REALM)",
+     "venue_year": "arXiv 2026",
+     "url": "https://arxiv.org/pdf/2609.16053",
+     "overlap": "Post-retrieval reconsolidation of graph topology driven by co-utilisation (LoCoMo 75.97, LongMemEval 65.11). Overlaps with using retrieval collisions as a reorganisation signal."
+    },
+    {
+     "title": "Entity-Collision: A Stratified Protocol for Attributing Retrieval Lift in Agent Memory",
+     "venue_year": "arXiv 2026",
+     "url": "https://arxiv.org/pdf/2605.29630",
+     "overlap": "Controlled distractors sharing the gold entity, with graded collision degrees, on agent memory and LongMemEval. This scoops the LME-I-style injected stress test."
+    },
+    {
+     "title": "MINTEval: Evaluating Memory under Multi-Target Interference in Long-Horizon Agent Systems",
+     "venue_year": "arXiv 2026",
+     "url": "https://arxiv.org/pdf/2605.18565",
+     "overlap": "Benchmark of interference from frequently updated facts, with distractor sweeps showing RAG degradation."
+    },
+    {
+     "title": "Beyond RAG for Agent Memory: Retrieval by Decoupling and Aggregation (xMemory)",
+     "venue_year": "arXiv 2026",
+     "url": "https://arxiv.org/html/2602.02007",
+     "overlap": "Argues top-k returns redundant correlated spans and selects a compact, diverse set top-down. Overlaps with the group slot cap and adaptive k."
+    },
+    {
+     "title": "AdaWidth: Query-Adaptive Embedding Width for Dense Retrieval",
+     "venue_year": "arXiv 2026",
+     "url": "https://arxiv.org/pdf/2608.23862",
+     "overlap": "Order-statistic characterisation of gold dropping out of top-k via a count of overtaking competitors."
+    },
+    {
+     "title": "When Personal Memory Has No Single Answer: Evaluating LLM Agents under Irreducible Conflict",
+     "venue_year": "arXiv 2026",
+     "url": "https://arxiv.org/pdf/2608.13921",
+     "overlap": "Sweeps same-domain distractor memories from 0 to 6 and measures degradation."
+    },
+    {
+     "title": "Diagnosing Retrieval vs. Utilization Bottlenecks in LLM Agent Memory",
+     "venue_year": "ICLR 2026",
+     "url": "https://arxiv.org/html/2603.02473v1",
+     "overlap": "Finds write strategy moves accuracy by 3-8 points versus 20 points for retrieval method. This is a risk to any write-time key method."
+    }
+   ],
+   "queries_run": [
+    "REALM retrieval-driven memory reconsolidation long-term LLM agents",
+    "LLM agent memory near-duplicate memories interference retrieval stale entries crowd out correct memory context budget (extended)",
+    "memory interference benchmark LLM agents distractor memories similar entities knowledge update 2026",
+    "\"interference\" memory write agent rewrite keys to be distinguishable confusable memories retrieval discriminative indexing LLM",
+    "Hu Long Wang experience reuse forgetting forward transfer ALFWorld BabyAI memory retrieval competition 2604.27003",
+    "order statistics model retrieval top-k distractors similarity margin theory dense retrieval failure probability number of distractors",
+    "agent memory retrieval cluster near-duplicates one representative per cluster top-k redundancy LongMemEval LoCoMo adaptive number of memories",
+    "\"Temporal Validity in Retrieval Memory\" supersession stale-fact errors agents",
+    "\"The Crowded Embedding Space\" mean-field marginalization retrieval-augmented agents memory",
+    "\"Entity-Collision\" stratified protocol attributing retrieval lift agent memory"
+   ],
+   "verdict": "partially_novel",
+   "differentiation": "The original plan's main claimed contributions are each already covered by 2026 work:\n- the shadowing measurement via injected confusable sessions (Entity-Collision, MINTEval, 2608.13921);\n- the closed-form order-statistics model (Crowded Embedding Space at ICML 2026, AdaWidth);\n- version-chain supersession (MemStrata, MoM);\n- retrieval-collision-driven reorganisation (REALM);\n- group-diverse slot selection (xMemory, MMR).\n\nWhat remains defensible:\n(1) Treating forgetting in sequential experience memory, the open problem posed by 2604.27003, as directional slot displacement. It can be measured with an oracle that removes only newer same-group competitors.\n(2) A contrastive, margin-gated key rewrite. It rewrites both members of a confusable pair and accepts the change only if both own-versus-cross probe margins rise. Values are never touched.\n(3) A direct test inside an agent loop of the Crowded Embedding Space prediction that locally self-relevant key optimisation (A-Mem-style evolution) marginalises minority or older content, which the contrastive objective should avoid.\n\nThe conversational supersession track is demoted to a baseline comparison.",
+   "novelty_note": "Searching found no paper that measures retrieval-slot displacement as the cause of BWT on the ALFWorld/BabyAI experience-reuse stream, or that applies pairwise-contrastive, margin-gated key rewriting to agent memory. Caveats:\n- I could not read REALM's full method, and it could contain a contrastive restructuring step.\n- The Crowded Embedding Space dynamic analysis is close in spirit. The plan must cite it as the theory being tested, not claim the mechanism.\n- Strongest risk: write strategy has been shown to matter much less than retrieval (2603.02473), so effects may be small. The oracle-first go/no-go is essential.",
+   "recommend": "pursue_with_pivot"
+  },
+  {
+   "key": "m-embodied-3d",
+   "title": "How budgeted 3D episodic memory forgets: a controlled study of grounded vs. LLM-rewrite consolidation across multi-scene deployments",
+   "one_liner": "An RGB-D perception stream is cached once and then replayed through many memory-management policies at the same fixed storage budget. The study measures budget-accuracy and accuracy-vs-age (forgetting) curves for embodied QA as a deployment grows from 1 to 16+ scenes. It tests three things: whether geometry-grounded merge plus coverage eviction degrades gracefully where LLM-rewrite consolidation drifts, whether a simple set-cover model predicts where accuracy collapses, and whether a query-free recall proxy can stand in for costly VLM evaluation. Everything is inference-only, with frozen models of 1.5B parameters or less and an API VLM.",
+   "store": "The store studied is an external one: an episodic 3D scene memory made of image snapshots plus object nodes with 3D boxes and CLIP features. Inside this one store, consolidation runs across timescales, from raw snapshots (fast, expensive) to merged object nodes with a text gist (slow, cheap). That is the doc's open problem, consolidation across stores and timescales, posed with a fixed budget and evaluated by forgetting curves. The link to streaming 3D is an extension: rebuild the memory from CUT3R and TTT3R predicted poses and depth instead of ground truth, and measure how pose drift turns into duplicate nodes and wasted budget.",
+   "task": "The task is embodied question answering about episodes the agent has seen, under a fixed memory budget, over long multi-scene deployments.\n(1) OpenEQA EM-EQA at K=1.\n(2) OpenEQA-Stream, built here. K concatenated EM-EQA episode histories pass through one memory with a fixed global budget, and all questions are asked at the end. It runs in two conditions: scene-tagged and untagged. The untagged condition is the main one, because retrieval interference only shows up there.\n(3) A small, secondary within-house revisit check on 3RScan rescans, testing whether budgeted eviction interacts with staleness. This is no longer a headline contribution, because LT-Mem, EMem and MemoryGuard cover staleness.",
+   "gap_addressed": "The adversarial search refuted several parts of the original plan.\n\nRevisit and staleness memory is largely scooped:\n- LT-Mem (IROS 2026 best-paper finalist, https://arxiv.org/pdf/2608.19059) keeps cross-session object identity and chooses overwrite, hold or multi-hypothesis per object according to its volatility. Its Live/Delta/Meta memory comes with the LT-VQA temporal QA benchmark, and it reports an order of magnitude fewer tokens than baselines.\n- EMem / EmbodiedMemory-Bench (https://arxiv.org/pdf/2609.28236) replaces outdated object relations in an entity graph.\n- MemoryGuard (https://github.com/Jxy-yxJ/memoryguard) checks for stale locations under a bounded budget.\n- \"When Memory Lies\" (https://arxiv.org/pdf/2608.04574) shows that stale memory can be worse than no memory.\n\nTiered consolidation into gists with a retention curve is in eMEM (https://arxiv.org/pdf/2606.03374). Bounded EQA memory is in FAST-EQA (https://arxiv.org/html/2602.15813), with k snapshots per target. Coverage or coreset selection under a fixed budget is in CoRDS (https://www.alphaxiv.org/abs/2605.14310), for streaming-video KV caches. Query-time key-frame selection over a 3D memory tree on OpenEQA is in MemTree3D (https://arxiv.org/pdf/2608.18009). Carrying memory across questions is in Sequential EQA (https://arxiv.org/pdf/2607.21571), which finds that spatially grounded memory is needed.\n\nWhat remains open, as far as 10 searches found, is narrower. No work reports a controlled measurement of 3D episodic memory with:\n(a) perception held fixed, so that only the management policy varies;\n(b) the same global storage budget for every policy;\n(c) multi-scene deployments, measured by budget-accuracy curves and accuracy-vs-age (backward-transfer) curves;\n(d) a head-to-head of geometry-grounded merge/evict against LLM-rewrite text consolidation, the failure mode the user's doc cites (https://arxiv.org/pdf/2605.12978) but which nobody has tested in embodied 3D;\n(e) an analytic predictor of the collapse point, and a validated query-free proxy for memory quality.\n\nLT-Mem, eMEM and EMem each propose a system. None sweeps the budget or reports forgetting as a function of deployment length.",
+   "hypothesis": "Every policy gets the same budget: S_total snapshots plus a fixed allowance of text tokens.\n\nH1 (curves differ in shape, not just level). On untagged OpenEQA-Stream, grounded consolidation (GC-Mem) has a larger area under the budget-accuracy curve (S from 4 to 64) than the best frame heuristic (equal-allocation uniform) and than a CoRDS-style feature coreset. The margin should be largest at small S.\n\nH2 (predictable collapse). Accuracy as a function of K has a knee near K* ≈ S_total / m̄, where m̄ is the mean per-scene weighted set-cover size measured from the cache. Frame heuristics reach their knee earlier, at roughly S_total / (frames needed per scene).\n\nH3 (drift). LLM-rewrite consolidation at equal token budget is non-monotonic in K and falls below its own K=1 score by K=16. Its forgetting is concentrated on old scenes and on spatial and attribute questions. GC-Mem does not fall below its own K=1 score.\n\nH4 (proxy). The query-free recall of ground-truth object instances retained in memory correlates with LLM-Match across policies and budgets (Spearman ρ ≥ 0.7). That would let policies be designed without VLM calls.\n\nEach hypothesis can fail on its own.",
+   "method": "Perception (frozen, cached once). The 3D-Mem / ConceptGraphs-style stack runs on every 5th frame: YOLO-World, then SAM masks, then CLIP ViT-H features. Masks are back-projected with depth and pose. Every per-frame 3D object observation goes to disk. All management policies then run on the CPU over the identical replayed stream, so differences come only from management.\n\nGC-Mem is kept deliberately simple: it is the grounded reference point, not a novelty claim. It runs online and never sees the questions.\n(a) Merge: associate observations to object nodes by 3D IoU > τ and CLIP cosine > κ. Each node carries a fast evidence variable and a slow persistence count.\n(b) Evict: when snapshots exceed S_total, run greedy budgeted weighted max-coverage over snapshots, which carries the (1-1/e) guarantee. Object weights are rarity × persistence.\n(c) Residue: an evicted snapshot leaves text residue (labels, 3D centroid, room) charged against the token budget. Old scenes drift toward residue-only.\n(d) Retrieve: 3D-Mem prefiltering picks C ≤ 8 snapshots plus residue for the API VLM. This runs in tagged and untagged conditions.\n\nComparators, all at equal budget and on the same cache:\n- unbounded memory\n- uniform subsampling, global and equal-allocation\n- FIFO\n- random\n- 3D-Mem prefilter truncation\n- surprise-gated write (Worth Remembering-style)\n- FAST-EQA-style k snapshots per detected target\n- CoRDS-style coreset on CLIP frame features, which is coverage without geometry and isolates what 3D grounding adds\n- LT-Mem-style volatility-aware overwrite/hold, re-implemented in a simplified deterministic form\n- eMEM-style tiered gist archival\n- LLM-rewrite consolidation, in which captions are rewritten periodically to fit the token budget\n- ReMEmbR-style caption memory with query-time retrieval\n\nAnalysis:\n- budget-accuracy curves\n- accuracy-vs-age curves and backward-transfer\n- forgetting broken down by OpenEQA question category\n- observed knee vs. predicted K*, from a toy set-cover model fitted on the cache alone\n- correlation of the query-free proxy (GT-instance recall, duplicate-node rate) with LLM-Match\n\nSecondary 3RScan revisit check: does coverage eviction preferentially remove stale views, and does that help or hurt current-state accuracy?\n\n3D extension: replace ground-truth pose and depth with CUT3R and TTT3R, and measure the duplicate-node rate, the budget wasted on duplicates, and the resulting shift of the knee.",
+   "datasets": [
+    "OpenEQA EM-EQA (Majumdar et al., CVPR 2024): ScanNet and HM3D episode histories with human-written questions - https://openaccess.thecvf.com/content/CVPR2024/html/Majumdar_OpenEQA_Embodied_Question_Answering_in_the_Era_of_Foundation_Models_CVPR_2024_paper.html",
+    "OpenEQA-Stream (built here): K in {1,4,16,32} concatenated EM-EQA histories, 3 scene orders per K, in tagged and untagged conditions",
+    "3RScan / RIO rescans (Wald et al., ICCV 2019), used only for a small templated revisit check - https://arxiv.org/pdf/1908.06109",
+    "Optional: LT-VQA from LT-Mem, if publicly released (availability unverified), as an external revisit benchmark - https://arxiv.org/pdf/2608.19059"
+   ],
+   "models": [
+    "Answering VLM, API only: gpt-4o-mini for sweeps and GPT-4o for the final runs, versions pinned and responses cached; a Gemini Flash-class model as a robustness check",
+    "LLM-Match judge: the official OpenEQA judge prompt, held fixed",
+    "Frozen perception, each at most 1.5B parameters: YOLO-World and SAM weights pinned in the 3D-Mem repo; CLIP ViT-H-14 (open_clip laion2b_s32b_b79k)",
+    "Extension: the public CUT3R checkpoint and training-free TTT3R for predicted pose and depth"
+   ],
+   "baselines": [
+    "Unbounded memory (upper bound); global and equal-allocation uniform subsampling; FIFO; random",
+    "3D-Mem snapshot memory with prefilter truncation - https://arxiv.org/html/2411.17735v2",
+    "FAST-EQA-style bounded k-snapshots-per-target memory - https://arxiv.org/html/2602.15813",
+    "CoRDS-style coreset selection under a fixed budget, applied to CLIP frame features - https://www.alphaxiv.org/abs/2605.14310",
+    "LT-Mem-style volatility-aware overwrite/hold policy (simplified re-implementation) - https://arxiv.org/pdf/2608.19059",
+    "eMEM-style tiered gist archival - https://arxiv.org/pdf/2606.03374",
+    "Surprise-gated write at equal budget (Worth Remembering) - https://arxiv.org/pdf/2606.03787",
+    "MemTree3D query-time key-frame selection, run over the budgeted memory - https://arxiv.org/pdf/2608.18009",
+    "LLM-rewrite text consolidation (Mem0/ReMEmbR-style) at equal token budget",
+    "OpenEQA published multi-frame VLM and Socratic baselines, for absolute reference"
+   ],
+   "metrics": [
+    "LLM-Match (official judge) with paired-bootstrap 95% CIs and a judge-rerun noise floor",
+    "Area under the budget-accuracy curve for S in {4,8,16,32,64}; retention ratio vs. unbounded memory",
+    "Accuracy-vs-age curve and backward transfer (accuracy drop on scene-1 questions as K grows); knee location vs. predicted K* = S_total / m̄",
+    "Per-category forgetting (OpenEQA categories: spatial, attribute, object recognition, and so on)",
+    "Query-free proxy: GT-instance recall in memory and duplicate-node rate, with Spearman correlation to LLM-Match",
+    "Cost: VLM input tokens per question, memory bytes, CPU write latency per frame; for the extension, ATE of CUT3R vs. TTT3R alongside the duplicate rate"
+   ],
+   "first_experiment": "This is a 10-day go/no-go on the ScanNet half of EM-EQA, with one GPU plus API access.\n\nDays 1-3: cache the perception output, which takes about 3 GPU-hours. Compute m̄ and the predicted K* for S in {8, 32}.\n\nDay 4: headroom check at K=1, comparing unbounded memory with 8 uniform frames using gpt-4o-mini.\n\nDays 4-8: build OpenEQA-Stream with K in {1, 4, 16} and 3 orders each, in the untagged condition, at S_total in {8, 32}. Run 6 policies on the CPU: equal-allocation uniform, FIFO, CoRDS-style CLIP coreset, 3D-Mem truncation, LLM-rewrite, and GC-Mem. Use about 400 questions per configuration, which comes to roughly USD 30-100. Rerun the judge on 10% of answers.\n\nDays 9-10: plot the budget-accuracy and age curves, compare the observed knee with K*, and compute the proxy correlation.\n\nThe go decision needs both of the following at K=16 and S=32 (untagged):\n(i) GC-Mem beats both equal-allocation uniform and the CLIP coreset by at least 4 points, with the CI excluding 0, and the gap at K=16 is larger than at K=1;\n(ii) either LLM-rewrite shows the predicted non-monotonic drift, or the observed knee lands within a factor of 2 of K*.\nWithout at least one of the two results in (ii), the paper is just another method with nothing to explain why it works.",
+   "kill_criterion": "Kill under either condition:\n(1) Equal-allocation uniform or the CLIP-feature coreset comes within 2 LLM-Match points of GC-Mem at every (K, S) in the untagged condition. That would mean 3D grounding adds nothing over feature-space coverage, which CoRDS already covers.\n(2) LLM-rewrite consolidation shows no drift, and the K* predictor misses the knee by more than a factor of 2. That would leave no analytic or empirical finding beyond method numbers already reported by LT-Mem, eMEM and FAST-EQA.\n\nDo not pivot back to a staleness benchmark on 3RScan. That space is occupied by LT-Mem/LT-VQA, EMem and MemoryGuard.",
+   "compute_gpu_hours": 60,
+   "timeline_weeks": 7,
+   "risks": "1. Contribution framing. The delta is now an evaluation and analysis contribution: a controlled budget/forgetting study, a K* predictor and a validated proxy. It is not a new memory system. Reviewers may see concatenated scenes as artificial. The untagged condition and the 3RScan within-house check partly answer this, but the realism critique stands.\n\n2. Headroom. OpenEQA questions may be answerable from a few frames, and VLM reasoning, not memory, may be the bottleneck. The K>1 streams and small budgets create memory pressure, and the day-4 check catches the problem early.\n\n3. Feature-coreset parity. A CLIP coreset may match the geometric policy (kill criterion 1).\n\n4. Fidelity of re-implementations. Simplified versions of LT-Mem, eMEM and FAST-EQA may be called strawmen. Use the released code where it exists, and state the simplifications.\n\n5. Judge noise of about 2 points. Mitigated with paired bootstrap and reruns.\n\n6. Undetected overlap. A 2026 paper may already sweep budgets for 3D EQA memory. Only 10 searches were run, and full texts of LT-Mem, Sequential EQA and FAST-EQA were not read. Read them in week 1.\n\n7. Pose drift in the CUT3R/TTT3R extension may break 3D association entirely. That would still be a reportable result.\n\n8. API drift. Pin model versions and cache all responses.\n\nGPU budget, about 60 hours: perception caching about 10 h, CUT3R/TTT3R about 10 h, debugging and slack about 40 h. The active-EQA stretch is dropped. API spend is about USD 300-600.",
+   "closest_work": [
+    {
+     "title": "LT-Mem: Volatility-Aware Spatio-Temporal Memory for Lifelong Scene Understanding",
+     "venue_year": "arXiv 2608.19059 / IROS 2026",
+     "url": "https://arxiv.org/pdf/2608.19059",
+     "overlap": "Multi-session object-level memory with overwrite/hold/multi-hypothesis actions per object and Live/Delta/Meta tiers, plus the LT-VQA temporal QA benchmark; reports an order of magnitude fewer tokens. This scoops the original revisit/staleness hypothesis (H3). It does not sweep a fixed storage budget or measure forgetting vs. deployment length."
+    },
+    {
+     "title": "eMEM: A Hybrid Spatio-Temporal Memory System For Embodied Agents",
+     "venue_year": "arXiv 2606.03374 (2026)",
+     "url": "https://arxiv.org/pdf/2606.03374",
+     "overlap": "Tiered, hippocampus-inspired consolidation of raw observations into gists, with a retention-curve probe on ProcTHOR. This overlaps the residue/gist consolidation step. It reports no budget-accuracy curves and no head-to-head of grounded vs. LLM-rewrite consolidation."
+    },
+    {
+     "title": "EmbodiedMemory-Bench / EMem",
+     "venue_year": "arXiv 2609.28236 (2026)",
+     "url": "https://arxiv.org/pdf/2609.28236",
+     "overlap": "Long-horizon embodied memory benchmark whose entity graph replaces outdated object relations. Covers staleness tracking; no storage-budget study."
+    },
+    {
+     "title": "FAST-EQA: Efficient Embodied Question Answering with Global and Local Region Relevancy",
+     "venue_year": "WACV 2026",
+     "url": "https://arxiv.org/html/2602.15813",
+     "overlap": "Bounded EQA scene memory with a fixed k snapshots per target, plus a small k=3 vs. k=5 ablation. Single episode, no multi-scene forgetting analysis."
+    },
+    {
+     "title": "CoRDS: Coreset-based Representative and Diverse Selection for Streaming Video Understanding",
+     "venue_year": "arXiv 2605.14310 (2026)",
+     "url": "https://www.alphaxiv.org/abs/2605.14310",
+     "overlap": "Coverage/coreset selection under a fixed memory budget, for streaming-video KV caches. This pre-empts the coverage-eviction idea in feature space; the 3D-grounded version must beat it."
+    },
+    {
+     "title": "Beyond Episodic Evaluation: Memory Architectural Bottlenecks in Sequential Embodied Question Answering",
+     "venue_year": "arXiv 2607.21571 / IROS 2026",
+     "url": "https://arxiv.org/pdf/2607.21571",
+     "overlap": "Carries memory across sequential questions and finds that spatially grounded 3D memory is needed. Single scene, no budget sweep."
+    },
+    {
+     "title": "Memory Tree Guided Key Frame Querying for Efficient 3D Question Answering (MemTree3D)",
+     "venue_year": "arXiv 2608.18009 / ECCV 2026 (likely)",
+     "url": "https://arxiv.org/pdf/2608.18009",
+     "overlap": "Online 3D memory tree on OpenEQA with query-time key-frame selection. Query-time retrieval rather than budgeted write/evict."
+    },
+    {
+     "title": "MemoryGuard: bounded active memory maintenance for long-horizon embodied agents",
+     "venue_year": "GitHub repo (2026)",
+     "url": "https://github.com/Jxy-yxJ/memoryguard",
+     "overlap": "Bounded-budget embodied memory that checks for stale object locations in AI2-THOR. Overlaps the staleness/invalidate op."
+    },
+    {
+     "title": "When Memory Lies (spatial memory staleness in VLM agents)",
+     "venue_year": "arXiv 2608.04574 (2026)",
+     "url": "https://arxiv.org/pdf/2608.04574",
+     "overlap": "Shows that trusting raw memory can be worse than having no memory, on a FrozenLake testbed. Related to the drift/staleness hypothesis, but not 3D."
+    },
+    {
+     "title": "GraphPad: Inference-Time 3D Scene Graph Updates for Embodied Question Answering",
+     "venue_year": "arXiv 2506.01174 (2025)",
+     "url": "https://arxiv.org/pdf/2506.01174",
+     "overlap": "Argues that compression fixed before the question is known loses what is needed, and edits the scene graph at inference time. A complementary query-time approach."
+    }
+   ],
+   "queries_run": [
+    "memory budget embodied question answering 3D scene memory eviction long-term multi-scene 2026",
+    "bounded memory lifelong robot scene graph forgetting consolidation object persistence revisit changing environment question answering",
+    "3RScan changing environment question answering benchmark object moved staleness embodied memory",
+    "LT-Mem volatility-aware spatio-temporal memory LT-VQA overwrite hold multi-hypothesis tokens baselines",
+    "\"Beyond Episodic Evaluation\" sequential embodied question answering memory architectural bottlenecks",
+    "fixed memory budget snapshot selection coverage 3D-Mem OpenEQA memory size accuracy tradeoff streaming video embodied",
+    "MemTree3D ECCV 2026 hierarchical memory tree 3D OpenEQA frame selection",
+    "embodied agent long-horizon memory across many environments fixed storage budget forgetting curve object-centric memory merge evict benchmark 2026 (extended)",
+    "eMEM hybrid spatio-temporal memory embodied agents tiered consolidation eMEM-Bench retention probe",
+    "MemoryGuard bounded active memory maintenance embodied agents stale object location verification"
+   ],
+   "verdict": "partially_novel",
+   "differentiation": "The original plan's method components are each covered by prior work:\n- staleness invalidation and persistence variables: LT-Mem, EMem, MemoryGuard\n- tiered gist consolidation: eMEM\n- coverage eviction under a budget: CoRDS, in feature space\n- bounded snapshot memory: FAST-EQA\n\nThe 3RScan Revisit-QA contribution is largely pre-empted by LT-Mem/LT-VQA and ChangingGrounding/Hypo3D on 3RScan.\n\nWhat remains defensible is a controlled measurement study. Perception is cached and replayed, so policies differ only in management, all at an identical global budget. The study produces:\n- budget-accuracy and accuracy-vs-age (backward-transfer) curves for 3D episodic memory over multi-scene untagged deployments\n- the first embodied-3D test of LLM-rewrite consolidation drift against geometry-grounded merging\n- a set-cover model that predicts the collapse point K* from the cache alone\n- a validated query-free proxy for designing policies\n\nFeature-space coverage (CoRDS-style) and LT-Mem- and eMEM-style policies serve as baselines rather than being ignored.",
+   "novelty_note": "This is weaker than the original framing. The 2026 literature is crowded: LT-Mem (IROS 2026 finalist), eMEM, EMem-Bench, FAST-EQA, MemTree3D and Sequential EQA all appeared between June and September 2026. The novelty now rests on an analysis axis (budget sweep, forgetting vs. deployment length, the K* predictor, the proxy) and on the grounded-vs-LLM-rewrite comparison, not on any memory operation. I read only snippets, so the full texts of LT-Mem, FAST-EQA and Sequential EQA may contain budget ablations that narrow this further. The day-10 go criterion requires an analytic or drift finding, not just a method win, because a plain method win would not be publishable against these papers.",
+   "recommend": "pursue_with_pivot"
+  }
+ ],
+ "rerank": {
+  "ranking": [
+   {
+    "id": "P10",
+    "title": "Garbage in the Null Space: superseded keys block fact revision in history-aware sequential editors (write ledger + downdate/GC)",
+    "novelty": 4,
+    "low_compute": 4,
+    "impact": 3,
+    "first_signal_speed": 5,
+    "overall": 7.5,
+    "tier": "A",
+    "rationale": "This plan has the sharpest falsifiable mechanism in the set, and the recheck strengthened it rather than weakening it. sLKE/MoKE (ACL 2025) document that lifelong editors fail to overwrite, but nobody explains why. The 2026 history-aware null-space editors (BetaEdit, OrthoEdit, EvoEdit) are the current SOTA, and they predict near-total blocking of a revision, not merely 1/(n+1) attenuation, because the revised subject key already lies in the protected span. A CPU closed-form toy (days 1-2) and about 10 GPU-hours on GPT2-XL give a GO/NO-GO within two weeks. The fix (remove the stale key, then downdate or recompute the projector) is training-free and cheap. It is memory management in the literal sense: garbage collection and eviction inside the weights store. It speaks less directly to cross-store consolidation, but it is a mechanism that store-to-weights pipelines (P5, P9) would rely on.",
+    "biggest_weakness": "The phenomenon is already known empirically (sLKE, S2RKE same-subject key cosine of about 1), so the contribution stands or falls on the closed-form diagnosis fitting real editors. AlphaEdit's z-margin or BetaEdit's internals may already avoid the blocking. Read BetaEdit's analysis section and 2606.26783 in full before week 2."
+   },
+   {
+    "id": "P1",
+    "title": "Keep the State: banking, restoring and cross-session warm-starting CUT3R/TTT3R recurrent state",
+    "novelty": 3,
+    "low_compute": 4,
+    "impact": 4,
+    "first_signal_speed": 4,
+    "overall": 7,
+    "tier": "A",
+    "rationale": "This is the doc's 3D section turned into a question with a clean yes/no oracle test: does a stored recurrent state carry information beyond its source frames (state restore vs re-feeding the same keyframes vs MASt3R+PnP, with identical retrievals)? It is training-free, the pilot costs 15-20 GPU-hours, and it covers the fast state to external store direction directly. An independent search in the m-3d-adapter check found no work that saves and reloads CUT3R/TTT3R/VGGT-family state across sessions, which supports the cross-session claim. It is also the base for the whole 3D thesis arc.",
+    "biggest_weakness": "The state may be little more than a cache of its source frames, or may be bound to session 1's gauge in ways that make read-only decoding brittle. Scal3R, loop-closure systems and the roughly monthly stream of CUT3R follow-ups make a concurrent cross-session paper likely, so speed matters."
+   },
+   {
+    "id": "P9",
+    "title": "Keep the Address, Evict the Text: cued self-test eviction for facts hidden in a small LM's weights",
+    "novelty": 3,
+    "low_compute": 4,
+    "impact": 4,
+    "first_signal_speed": 4,
+    "overall": 6.5,
+    "tier": "A",
+    "rationale": "This plan targets the verified open problem in O'Neill 2607.11020: forgotten facts keep their log-prob, wrong answers redirect to the latest write, and only full in-context text restores them. Its proposed third store state, an address-only entry, goes straight at the doc's question of what the external store should keep once content has moved into the weights. The pilot costs 10-15 GPU-hours on Qwen 0.5B, and even a negative result (that addresses act only as generic priming) is informative. Its novelty survives Dual-Layer only once the claim is narrowed to the address state plus the delayed, cued gate.",
+    "biggest_weakness": "Several prior results point toward a null: Pseudo-Forgetting suggests generic or optimized suffixes may recover as much as a correct address, REMIX finds random codes are the most forgettable, and O'Neill reports anti-savings. Disentangling the template confound is subtle, and Dual-Layer's group can easily extend into this space."
+   },
+   {
+    "id": "P4",
+    "title": "Rewrite or Advance? Compute-matched state-writing replay for CUT3R/TTT3R",
+    "novelty": 3,
+    "low_compute": 4,
+    "impact": 3,
+    "first_signal_speed": 4,
+    "overall": 6,
+    "tier": "B",
+    "rationale": "It brings the classic continual-learning lesson (replay is the bar to beat, and compute rather than storage is the budget) into a recurrent 3D fast state, with an equal-pass frontier and stacking on 2026 update rules. The patch is about 100 lines, the pilot costs about 8 GPU-hours, and it shares the TTT3R fork, data and evaluation with P1. It is the natural second chapter of the 3D arc, covering the data buffer to fast state direction.",
+    "biggest_weakness": "Replaying old keyframes into a state that tracks the current pose frame may simply hurt, and any gains may appear only on loop sequences, where Anchor3R/ABot-Recon-style reinsertion already covers the ground. Gains may also vanish once stacked on ReCal3R or TTSA3R."
+   },
+   {
+    "id": "P13",
+    "title": "Update Frequency Is Not Retention: auditing and fixing cross-session consolidation in CMS/HOPE",
+    "novelty": 3,
+    "low_compute": 4,
+    "impact": 4,
+    "first_signal_speed": 5,
+    "overall": 6,
+    "tier": "B",
+    "rationale": "It tests the doc's 'main bet' (HOPE-style multi-timescale memory) directly, and the CPU pilot is already done (the lemma holds to 3e-15 and decay produces an interior spacing optimum). An audit asking whether update frequency alone consolidates anything is high-visibility given the Nested Learning hype, and the Sleep paper (2606.03979) indirectly concedes the point. The cheap DeltaNet+MLP-CMS MQAR check can decide the paper within two weeks.",
+    "biggest_weakness": "The principle is prior art (Jones et al. ICLR 2023, Smith 2006, Hinton & Plaut, Benna-Fusi, Mozer). Its value depends on real HOPE not escaping the degeneracy, and per-level momentum, Muon or M3 may act as implicit retention. A faithful HOPE reimplementation is the expensive, risky part, and the plan becomes a short note if real CMS escapes."
+   },
+   {
+    "id": "M-retrieval-side",
+    "title": "Displacement-Aware Experience Memory: margin-gated contrastive key rewriting against retrieval-side forgetting",
+    "novelty": 3,
+    "low_compute": 5,
+    "impact": 3,
+    "first_signal_speed": 4,
+    "overall": 6,
+    "tier": "B",
+    "rationale": "This is the cheapest plan in the set: about 30 GPU-hours plus $50-150 of API calls. It turns the doc's lesson that external memory moves the dilemma (2604.27003) into a measurable mechanism, an oracle that removes only the newer same-group competitors. It also tests the Crowded Embedding Space prediction inside a real agent loop. The oracle-first gate keeps sunk cost small.",
+    "biggest_weakness": "2603.02473 shows write strategy matters far less than the retrieval method, so effects may be smaller than seed noise for a gpt-4o-mini ALFWorld agent. The 2604.27003 protocol may not reproduce, and REALM may already contain contrastive restructuring. Every component besides the displacement measurement has close prior art."
+   },
+   {
+    "id": "M-3d-adapter",
+    "title": "Where should a frozen CUT3R keep a scene it will revisit? Budget-matched state/snapshot/replay/adapter/SCR memory with a ground-truth-free 'earned' signal",
+    "novelty": 3,
+    "low_compute": 2,
+    "impact": 4,
+    "first_signal_speed": 3,
+    "overall": 6,
+    "tier": "B",
+    "rationale": "It is the most complete four-store instantiation of the doc's consolidation question in 3D, asking when a scene has earned weights, and the cross-session protocol appears unclaimed. It should not run as a standalone project. Its S1-S3 arms are P1's mechanisms, so it is best run as phase 2 of P1 on the same 7-Scenes revisit pairs, once P1 shows the state is worth keeping.",
+    "biggest_weakness": "Every mechanism is prior art (Free Geometry, LoRA3D, ACE-G), so this is a benchmark paper. BPTT through CUT3R at 512 resolution makes the 160 GPU-hour estimate optimistic. Free Geometry reports gains of only about 3-4%, so the adapter-over-snapshot effect may be within noise, and an ACE-style head may own registration."
+   },
+   {
+    "id": "P6",
+    "title": "Do-No-Harm Memory: paired conformal guarantees that consolidated agent memory is no worse than no memory",
+    "novelty": 3,
+    "low_compute": 2,
+    "impact": 3,
+    "first_signal_speed": 4,
+    "overall": 5.5,
+    "tier": "B",
+    "rationale": "It is the only plan offering a finite-sample guarantee against the doc's 'memory falls below no-memory' failure (2605.12978), and it works for black-box API actors. That makes it practical, and it is portable to any store. The first signal arrives in two weeks.",
+    "biggest_weakness": "Reviewers may read it as 'apply CRC/ACI to memory'. The write gate competes with Janus, Recuris and AGMR. The plan as written uses Qwen3-8B with vLLM at 160 GPU-hours, which violates the 1.5B/low-compute preference unless moved to API-only. If harm is not predictable, the gate collapses to 'never use memory'."
+   },
+   {
+    "id": "P5",
+    "title": "Rent, Buy, or Let It Expire: competitive consolidation of changing facts from a retrieval store into a small LM",
+    "novelty": 3,
+    "low_compute": 3,
+    "impact": 4,
+    "first_signal_speed": 3,
+    "overall": 5.5,
+    "tier": "B",
+    "rationale": "It frames the doc's open problem (what moves into the weights, and when) as an online rent-or-buy problem with expiring purchases and store externalities, which is an elegant framing. The theory and simulation run on CPU, and the plan fits arc 2 next to P9 and P10.",
+    "biggest_weakness": "Building a real Wikidata revision stream is heavy engineering. Small-model writes (MEMIT/LoRA on 0.5B) may give poor paraphrase generalization, so the honest answer may be 'never buy'. ALLOT and Dual-Layer already learn which facts to write, and ALLOT's method section is still unread. The headline result arrives late."
+   },
+   {
+    "id": "P8",
+    "title": "Overwrite or Wait? Bayesian quickest-change belief slots and an entrenchment law for multi-timescale memory",
+    "novelty": 3,
+    "low_compute": 4,
+    "impact": 3,
+    "first_signal_speed": 5,
+    "overall": 5.5,
+    "tier": "B",
+    "rationale": "The CPU-only first week gives a fast signal. The entrenchment law, under which Memini/Benna-Fusi-style coupled fast/slow memories entrench old facts linearly in repetition count, is the piece that ties it to the doc's multi-timescale bet. It is a good theory companion to P13.",
+    "biggest_weakness": "A Bayesian change-point filter on slots may look obvious, and a tuned k-confirm heuristic may match it. The plan depends on LLM stance and scope extraction quality. BBT, MemOps, BeliefMem and MemTxn crowd the method side, and the 7B serving cost is avoidable but listed."
+   },
+   {
+    "id": "P11",
+    "title": "Ridge-optimal, protected folding of session states into persistent memory in linear-attention LMs",
+    "novelty": 2,
+    "low_compute": 3,
+    "impact": 4,
+    "first_signal_speed": 4,
+    "overall": 5,
+    "tier": "B",
+    "rationale": "It hits the fast state to weights consolidation that the doc names as the frontier, and it is gradient-free. The recheck, however, found PRECOG/SMC (Aug 2026), State Soup, Document Soupability, FAAST and the Sleep paper, so only the ridge/Gram-protected merge and the diagnostic map remain. It is best kept as a chapter in arc 3 rather than a lead project.",
+    "biggest_weakness": "A per-head linear ridge fold is exact only for one layer. In deep multi-layer models the fresh-context states and queries drift, so the fold may not beat averaging or PRECOG composition. Fact recall from injected states in public 1.3-1.5B models may be too weak to measure."
+   },
+   {
+    "id": "P3",
+    "title": "Revisits Break Persistence of Importance: oracle-audited, revisit-stratified KV eviction in StreamVGGT/STream3R",
+    "novelty": 3,
+    "low_compute": 3,
+    "impact": 2,
+    "first_signal_speed": 4,
+    "overall": 5,
+    "tier": "C",
+    "rationale": "A closed-loop future-attention oracle combined with revisit stratification is a clean audit idea, and it is in the user's 3D area. But KV eviction for streaming 3D transformers is crowded (Evict3R, InfiniteVGGT, RegVGGT, STAC, RetrieveVGGT, OVGGT). The output is an audit of others' heuristics rather than a consolidation result.",
+    "biggest_weakness": "The full-cache StreamVGGT at hundreds of frames is memory-heavy, and the oracle needs multiple passes. STAC or RetrieveVGGT may already report revisit behaviour. Impact on the doc's cross-store consolidation problem is low."
+   },
+   {
+    "id": "P2",
+    "title": "What do streaming 3D models remember? Probed accuracy matrices and a delta-rule reset law",
+    "novelty": 2,
+    "low_compute": 4,
+    "impact": 3,
+    "first_signal_speed": 4,
+    "overall": 4.5,
+    "tier": "C",
+    "rationale": "Its read-only probes would be useful instruments, but forgetting in the CUT3R state, the roughly 3-frame horizon, retention theory and revisit write suppression are all already claimed (TTSA3R, MeMix, ReCal3R, FILT3R, 2605.16981, HorizonStream). Fold its probes into P1 and P4 as diagnostics rather than running it as a paper.",
+    "biggest_weakness": "Raymap and re-present probes may measure priors rather than memory. The delta-rule reset-law prediction (Spearman 0.6 over 20 or more sequences) is fragile, and the benchmark framing has little left that is new."
+   },
+   {
+    "id": "M-change-router",
+    "title": "Beyond Fact Admission: routing facts, skills, format shifts and noise across context, store and LoRA, with corroboration-gated weight writes",
+    "novelty": 2,
+    "low_compute": 3,
+    "impact": 3,
+    "first_signal_speed": 4,
+    "overall": 4.5,
+    "tier": "C",
+    "rationale": "It speaks to Harrington's 'type of change decides the store' directly. But Dual-Layer Agentic Memory owns fact routing plus write-back, and the destination-by-type matrix risks confirming the obvious (skills need weights, formats fit in a prompt). The corroboration gate is the most novel piece and could become a section of P9 or P5.",
+    "biggest_weakness": "The kill criterion (b), where the full router lands within 1 point of the s2-only Dual-Layer analogue plus always-LoRA, is likely to trigger. The mixed stream is artificial, the re-implementation of an unreleased baseline invites 'unfaithful' critiques, and there is high scoop pressure from the Dual-Layer authors."
+   },
+   {
+    "id": "P7",
+    "title": "Depth, Not Time: lineage depth predicts when rewritten agent memory rots",
+    "novelty": 2,
+    "low_compute": 2,
+    "impact": 3,
+    "first_signal_speed": 3,
+    "overall": 4.5,
+    "tier": "C",
+    "rationale": "It addresses the doc's 2605.12978 lesson (rewrite-driven memory rot), and lineage depth as a schedule-independent state variable is a neat idea. But 2605.12978, 2609.25052 and Yang et al. already have the inverted-U and analytic error-dynamics models, and the plan relies on 8B models at 170 GPU-hours.",
+    "biggest_weakness": "Depth may not collapse schedules onto one curve, and predicting the accuracy peak out of sample from telephone probes is ambitious. The compute exceeds the budget preference unless moved to API, and MemTrace or 2609.25052 may already index rot by rewrite count."
+   },
+   {
+    "id": "P12",
+    "title": "How much replay does a pretrained ViT need? Replay-demand laws r*(T) and a drift-sensor race",
+    "novelty": 2,
+    "low_compute": 3,
+    "impact": 2,
+    "first_signal_speed": 4,
+    "overall": 4.5,
+    "tier": "C",
+    "rationale": "The recheck removed the thermostat: 2602.22479 already runs a PI forgetting-gap replay controller, and Bethune et al. and Hickok cover replay-fraction laws and replay saving. What remains is a vision measurement paper on r*(T) and a proxy race. It is solid but incremental, and far from the doc's cross-store consolidation and 3D interests.",
+    "biggest_weakness": "Pretrained ViT with LoRA may show almost no forgetting (kill criterion 1), and 'measurement only' papers on class-incremental benchmarks are a hard sell. The first-pass compute is optimistic at Mammoth scale."
+   },
+   {
+    "id": "M-embodied-3d",
+    "title": "How budgeted 3D episodic memory forgets: grounded vs LLM-rewrite consolidation across multi-scene deployments",
+    "novelty": 2,
+    "low_compute": 4,
+    "impact": 2,
+    "first_signal_speed": 3,
+    "overall": 4,
+    "tier": "C",
+    "rationale": "Its controlled replay of cached perception is a good methodological idea, but the space filled up between June and September 2026 (LT-Mem, eMEM, EMem, FAST-EQA, MemTree3D, Sequential EQA). It is also tied to scene graphs and EQA rather than the CUT3R, TTT3R and Point3R line the user cares about.",
+    "biggest_weakness": "OpenEQA is known to be partly answerable without memory, so the headroom may be too small. Concatenated scenes are artificial, and a CLIP-feature coreset may match geometric coverage (kill criterion 1). Undetected budget sweeps in the full texts are likely."
+   }
+  ],
+  "start_here": "Run three short, cheap pilots in parallel over weeks 1-2, totalling under about 50 GPU-hours, and let the GO/NO-GO results choose the lead project.\n\n(1) P10, the quick, crisp win. Days 1-2: a CPU closed-form toy in both regimes, AlphaEdit's soft cache_c (attenuation) and the BetaEdit/OrthoEdit hard projector (predicted near-total blocking), with and without stale-key removal. Then about 10 GPU-hours on GPT2-XL with 1k AToKe-ME chains plus sLKE, running vanilla, downdate and rollback. Before committing, read BetaEdit's analysis section and 2606.26783 in full.\n\n(2) P1, the anchor of the 3D arc. The 15-20 GPU-hour oracle-retrieval test on 7-Scenes revisit pairs compares state restore with re-fed keyframes and with MASt3R+PnP, plus a whole-session warm start. Build the revisit pairs and the TTT3R fork so that P4's replay scheduler and M-3d-adapter's S1-S3 arms reuse them unchanged. This area moves at roughly one paper a month, so it must start now.\n\n(3) P9, the store-to-weights consolidation thread, only if bandwidth allows. The 10-15 GPU-hour Qwen3-0.6B or Qwen2.5-0.5B pilot (aligned with O'Neill's setup) tests whether a correct address cue recovers hidden facts beyond a shuffled code, a format prime and an optimized generic suffix, with disjoint templates.\n\nAt week 2, make P10 the first paper if it is GO, because it is the fastest route to publication. Make whichever of P1 or P9 passes its oracle test the thesis spine. P13's CPU theory can proceed in the background at near-zero cost.",
+  "thesis_arcs": [
+   "Arc 1, streaming 3D reconstruction as a four-store memory system (the best fit to the user's 3D interest). The sequence runs P1, then P4, then M-3d-adapter, each covering one direction of transfer. P1 covers fast state and external snapshot bank: is the CUT3R/TTT3R state worth keeping, across resets and sessions? P4 covers data buffer to fast state: compute-matched replay-as-write. M-3d-adapter covers fast state to weights: when does a revisited scene earn an adapter, budget-matched against carry, snapshot, replay and SCR? P2's read-only probes and P3's oracle KV audit become diagnostic chapters rather than papers. All of it shares one TTT3R fork and one 7-Scenes/12-Scenes/TUM revisit protocol. Optional bridge to Arc 3: apply P13's retention and downscaling rule to TTT3R's closed-form learning rate.",
+   "Arc 2, the lifecycle of a fact across store and weights in a small LM: write, revise, evict, garbage-collect. P9 asks what the store should keep after consolidation (address vs text, with a cued delayed eviction gate). P10 asks what happens in the weights when a consolidated fact is revised: superseded keys as garbage in null-space editors, plus a downdate/GC ledger. P5 asks when to buy a fact into the weights at all, with expiring purchases and store externalities. M-change-router's corroboration gate can fold in as a write-safety section. Each chapter is a training-free or small-model experiment at 0.5-1.5B or GPT2-XL, and together they give a coherent 'memory management across two stores' dissertation that answers the doc's open consolidation problem for facts.",
+   "Arc 3, multi-timescale consolidation theory: when does fast memory actually become slow memory? P13 shows that update frequency alone does not separate timescales in CMS/HOPE, gives a load-aware retention and downscaling design rule, and runs an audit against Sleep-style distillation. P11 asks when a closed-form, protected ridge fold of fast states into a persistent state beats state averaging or PRECOG composition, presented as a diagnostic map across RWKV-7, DeltaNet, GLA and Mamba2. P8's entrenchment law for Memini/Benna-Fusi coupled fast/slow memories supplies the external-store counterpart. This arc is mostly CPU and toy work plus 1.3-1.5B recurrent LMs, so it is the lowest-compute route to a theory-flavoured thesis directly on the doc's 'main bet'.",
+   "Arc 4 (secondary), external-store hygiene for agents: memory that does not hurt. M-retrieval-side covers retrieval-slot displacement as the mechanism of backward-transfer loss, with contrastive key rewriting. P6 covers a paired conformal no-harm read gate. P7 covers lineage-depth-driven rot of rewritten memory. It is API-heavy and cheap on GPUs, but crowded. Keep M-retrieval-side as a low-cost side project and park P6 and P7 unless Arc 2 stalls."
+  ]
+ }
+}
