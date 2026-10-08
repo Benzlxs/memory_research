@@ -38,11 +38,11 @@ This script measures the slow level's signal coefficient for the target items (m
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | slow only | 0.077 | 0.076 | 0.076 | 0.075 | 0.068 | 0.051 |
 | shared (HOPE-like) | 0.024 | 0.024 | 0.023 | 0.019 | 0.014 | 0.014 |
-| shared + fast decay 0.99 | 0.033 | 0.042 | 0.048 | 0.055 | 0.053 | 0.042 |
-| shared + fast decay 0.97 | 0.042 | 0.059 | 0.065 | **0.067** | 0.062 | 0.047 |
+| shared + fast retention 0.99 (1% decay/step) | 0.033 | 0.042 | 0.048 | 0.055 | 0.053 | 0.042 |
+| shared + fast retention 0.97 (3% decay/step) | 0.042 | 0.059 | 0.065 | **0.067** | 0.062 | 0.047 |
 | shared + downscale 0.5 every 64 | 0.033 | 0.042 | 0.049 | 0.055 | 0.053 | 0.042 |
 | shared + reset every 256 | 0.025 | 0.028 | 0.038 | 0.047 | 0.045 | 0.037 |
 
-Making the fast level forget, by continuous decay or periodic downscaling, restores a spacing optimum. With decay 0.97 the coefficient peaks at 0.067 at gap 128, 2.8× plain shared CMS.
+Making the fast level forget, by continuous decay or periodic downscaling, restores a spacing optimum. With retention 0.97 per step, the coefficient peaks at 0.067 at gap 128. That is 3.5× plain shared CMS at the same gap (0.019), though still below slow-only (0.075).
 
 Next step: test whether the same holds in a nonlinear model, DeltaNet plus two slow MLP levels on MQAR. See plan 5 in [`../../ideas/full-plans.md`](../../ideas/full-plans.md).

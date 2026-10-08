@@ -2,7 +2,7 @@
 
 *Brainstorm dated 2026-10-08. It is a companion to the doc [Memory methods for continual learning: the big picture](https://claude.ai/artifact/JnG7owgYpsPUUfPsUhjnCr).*
 
-Seventeen project ideas made the cut. Each fits in roughly 30–170 GPU-hours on one GPU for a full paper, and each gives a go/no-go answer within two weeks for about 20 GPU-hours or less. The three best starting points are listed below.
+Seventeen project ideas made the cut. Each fits in roughly 30–170 GPU-hours on one GPU for a full paper. Most give a go/no-go answer within two weeks for 20 GPU-hours or less; #8 needs 25–30 GPU-hours and #10 about 25 plus a CPU week. #8 and #15 are planned around 8B models, so they stay low-GPU only if moved to API-only models. The three best starting points are listed below.
 
 | Rank | Idea | Why start here |
 | --- | --- | --- |
@@ -24,7 +24,7 @@ GPU-hours are the planning estimate for a full paper. "First signal" is the cost
 | 2 | [Keep the state](#2-keep-the-state-bank-restore-and-warm-start-cut3rttt3r-state) | Fast state ↔ snapshot bank | Streaming 3D, cross-session revisits | ~120 | 15–20 GPU-h | A |
 | 3 | [Keep the address, evict the text](#3-keep-the-address-evict-the-text) | Store → weights | Sequential fact injection, 0.5–1.5B LMs | ~150 | 10–15 GPU-h | A |
 | 4 | [Rewrite or advance?](#4-rewrite-or-advance-compute-matched-replay-into-a-3d-recurrent-state) | Buffer → fast state | Streaming 3D at a fixed pass budget | ~150 | ~8 GPU-h | B |
-| 5 | [Update frequency is not retention](#5-update-frequency-is-not-retention-auditing-multi-timescale-cms-memory) | Fast → slow levels | Theory, MQAR, HOPE audit | mostly CPU | CPU pilot already run (see `pilots/`) | B |
+| 5 | [Update frequency is not retention](#5-update-frequency-is-not-retention-auditing-multi-timescale-cms-memory) | Fast → slow levels | Theory, MQAR, HOPE audit | mostly CPU | CPU pilot done (see `pilots/`); ≤10 GPU-h DeltaNet/MQAR test | B |
 | 6 | [Displacement-aware experience memory](#6-displacement-aware-experience-memory) | External store (retrieval side) | ALFWorld/BabyAI agent streams | ~30 + API | ~3 GPU-h + $50–150 API | B |
 | 7 | [Where should a frozen CUT3R keep a scene?](#7-where-should-a-frozen-cut3r-keep-a-scene-it-will-revisit) | All four, state → weights | Streaming 3D, cross-session revisits | ~160 | ~18 GPU-h | B |
 | 8 | [Do-no-harm memory](#8-do-no-harm-memory-a-guarantee-against-memory-making-things-worse) | External store (text) | Reasoning streams with self-built memory | ~160 + API | 25–30 GPU-h | B |
@@ -56,7 +56,15 @@ Run three short pilots in weeks 1–2. Together they cost under about 50 GPU-hou
    - A 10–15 GPU-hour pilot on Qwen2.5-0.5B, or Qwen3-0.6B to match O'Neill's setup.
    - It tests whether a short address cue brings back facts that are hidden in the weights.
 
-At week 2, make #1 the first paper if it is a GO. Whichever of #2 or #3 passes its oracle test becomes the main line of work. The theory in #5 runs on CPU in the background at almost no cost.
+At week 2:
+- If #1 is a GO, make it the first paper.
+- Choose the main line of work:
+  - if #2's oracle test passes, the main line is Arc 1 (streaming 3D);
+  - if #2 fails and #3's address-cue test passes, the main line is Arc 2 (life cycle of a fact);
+  - if both pass, choose by which direction you want the thesis to take;
+  - if neither passes, fall back to #4 or the theory track in #5.
+
+The theory in #5 runs on CPU in the background at almost no cost.
 
 ## Four research arcs
 
@@ -67,9 +75,9 @@ Several ideas share code and data, so they group into four arcs. Each arc could 
 | **Streaming 3D as a four-store memory system** | #2 → #4 → #7, with #13 and #12 as diagnostic chapters | Is the CUT3R/TTT3R state a memory worth keeping (#2), refreshing (#4) or consolidating into weights (#7)? | One TTT3R fork with hooks for state dump, read-only decode and view injection; one revisit protocol on 7-Scenes, 12-Scenes and TUM |
 | **Life cycle of a fact across store and weights** | #3, #1, #9, with #14 as a safety section | When does a fact move into the weights (#9)? What happens to the store's copy (#3)? What happens in the weights when the fact is revised (#1)? | Qwen2.5 0.5–1.5B and GPT2-XL; EasyEdit/AlphaEdit; CounterFact, zsRE, AToKe, WikiFactDiff |
 | **Multi-timescale consolidation theory** | #5, #11, #10 | When does fast memory actually become slow memory, inside the model (#5, #11) and in an external store (#10)? | flash-linear-attention; delta-rule algebra; CPU simulations |
-| **External-store hygiene for agents** | #6, #8, #15, #17 | How do you keep accumulated text memory from hurting? | API agents, Dynamic Cheatsheet/ACE builders, ALFWorld |
+| **External-store hygiene for agents** (secondary) | #6 as a cheap side project; #8 and #15 parked unless Arc 2 stalls | How do you keep accumulated text memory from hurting? | API agents, Dynamic Cheatsheet/ACE builders, ALFWorld |
 
-Arc 1 fits the 3D section of the big-picture doc best. Arc 3 needs the least compute and answers the doc's "main bet" on multi-timescale memory most directly.
+Arc 1 fits the 3D section of the big-picture doc best. Arc 3 needs the least compute and answers the doc's "main bet" on multi-timescale memory most directly. #17 stands alone as a Tier C study.
 
 ---
 
@@ -81,24 +89,34 @@ Each card names the specific lesson or failure mode in the big-picture doc that 
 
 *Weights · sequential fact revision (AToKe-ME revision chains, sLKE) · GPT2-XL and phi-1.5 with official AlphaEdit settings · ~150 GPU-h · Tier A*
 
-**Idea.** Null-space and protected-set editors protect every past write: AlphaEdit, BetaEdit, OrthoEdit, EvoEdit and MEMIT_seq. When a fact is revised, the old write becomes garbage, but the editor keeps defending it. These editors compute the edit key from the subject alone, so a revision's key is almost identical to the key it replaces.
+**Idea.** Null-space and protected-set editors protect every past write: AlphaEdit, BetaEdit, OrthoEdit, EvoEdit and MEMIT_seq. When a fact is revised, the old write becomes garbage, but the editor keeps defending it. These editors compute the edit key from the subject alone, so a revision's key is almost identical to the key it replaces. The predicted consequences, not yet tested:
 - With a soft Gram penalty, the revision is attenuated: after n earlier writes to the same subject, it takes about 1/(n+1) effect per layer.
 - With a hard projector, the revision is almost fully blocked.
 - Either way, a "ghost" of the old value stays protected.
 
 The fix is a write ledger. It removes the stale key with a rank-1 downdate of the cached Gram (or a recomputed projector) and compacts periodically.
 
+*Terms:*
+- *Soft Gram penalty:* AlphaEdit-style, it penalizes changing the outputs for past keys.
+- *Hard projector:* updates are projected onto the null space of all past keys.
+- *Rollback:* subtract the superseded edit's weight change before writing the revision.
+- *Realized fraction:* the share of the requested change at the edited layer that actually lands.
+
 **Big-picture link.** This is the weights row of the doc ("protecting them costs plasticity"). It is also the weight-store version of "useful memories become faulty when continuously updated". The proposal is garbage collection for the weight store.
 
 **First experiment (go/no-go).**
-- Days 1–2, CPU only: a linear associative memory using AlphaEdit's exact closed form, to confirm the attenuation law and the downdate fix.
-- Next, about 10 GPU-hours on GPT2-XL, comparing three edit sets:
+- Days 1–2, CPU only: a linear associative memory run in two regimes, each with and without the downdate:
+  - AlphaEdit's soft Gram penalty, predicted to give 1/(n+1) attenuation;
+  - a BetaEdit/OrthoEdit-style hard projector, predicted to block revisions almost entirely.
+- Next, about 10 GPU-hours on GPT2-XL with the official AlphaEdit and MEMIT_seq code, comparing three edit sets:
   - 1,000 AToKe-ME chains with 3 revisions each;
   - 3,000 distinct-subject facts (same number of writes);
   - 1,000 final values edited once (same number of live facts).
 - Four conditions: vanilla, +downdate, +rollback, +both.
 - **GO** if all three hold:
-  - revision chains trail the matched distinct facts by ≥10 points in current-value efficacy or ghost rate;
+  - revision chains trail the matched distinct facts by ≥10 points on either metric:
+    - current-value efficacy: the model prefers the latest value over every earlier value in the chain;
+    - ghost rate: a superseded, non-original value is the model's top choice;
   - the realized fraction of each edit follows the prediction;
   - the downdate closes ≥50% of the gap, while rollback alone closes clearly less.
 
@@ -114,7 +132,9 @@ The fix is a write ledger. It removes the stale key with a rank-1 downdate of th
   - history-aware null-space editors: [BetaEdit](https://arxiv.org/abs/2605.09285), [OrthoEdit](https://aclanthology.org/2026.tacl-1.51.pdf) and [EvoEdit](https://arxiv.org/abs/2510.13851);
   - edit reversal: [2505.20819](https://arxiv.org/abs/2505.20819);
   - an [AlphaEdit reproducibility study](https://arxiv.org/abs/2606.26783) reporting degradation after about 5k edits.
-- Still new: treating superseded writes as garbage in the protected set, the closed-form law for attenuation or blocking, the downdate ledger, and the claim that collapse scales with live facts rather than total writes. Neither the 12 agent searches nor an independent search found this.
+- Still new: treating superseded writes as garbage in the protected set, the closed-form law for attenuation or blocking, the downdate ledger, and the claim that collapse scales with live facts rather than total writes.
+  - No search turned up this: 12 searches in the second round plus one extra search during this write-up. All of them saw snippets only, and the first round's check ran no searches.
+  - Before committing, read BetaEdit's analysis section and the AlphaEdit reproducibility study in full.
 
 **Main risk.** The margin in AlphaEdit's value optimization may absorb the attenuation, so binary efficacy barely moves. The fix itself is a one-line rank-1 downdate, so the paper must stand on the diagnosis and the scaling law.
 
@@ -144,10 +164,14 @@ The fix is a write ledger. It removes the stale key with a rank-1 downdate of th
   - a hard switch to the saved state;
   - a per-token blend.
 - **GO** if both hold:
-  - the stored state beats the re-fed images by ≥5 points of recall at 25 cm / 10°;
-  - restoring beats pose-graph-only by ≥10% ATE.
+  - cross-session, either of:
+    - decoding from the stored snapshot beats both re-feed baselines by ≥5 points of recall at 25 cm / 10°;
+    - a warm-started session 2 has unaligned ATE within 1.5× of a cold start with oracle Sim(3) alignment;
+  - within-session, a hard switch or blend beats pose-graph-only by ≥10% ATE or revisit-frame depth AbsRel.
 
-**Kill if** the stored state is no better than re-feeding its own keyframe images. The state would then be only a cache of its frames.
+**Kill if** both tests fail. The stored state would then be no better than re-feeding its own keyframe images, so it is only a cache of its frames.
+- If only the cross-session test fails, pivot to a within-session recovery paper against Scal3R.
+- If only the within-session test fails, keep the cross-session warm start as the sole contribution.
 
 **Closest work, and what is still new.**
 - Already exists:
@@ -163,18 +187,21 @@ The fix is a write ledger. It removes the stale key with a rank-1 downdate of th
 
 *Store → weights · sequential injection of invented facts, with a fixed 256-token retrieval context and hard distractors · Qwen2.5-0.5B/1.5B (Qwen3-0.6B to match prior work) · ~150 GPU-h · Tier A*
 
-**Idea.** [O'Neill (Jul 2026)](https://arxiv.org/abs/2607.11020) found that facts written into a small LM's weights are mostly hidden by later writes rather than erased:
-- the "forgotten" facts keep most of the log-probability their write added;
+**Idea.** [O'Neill (Jul 2026)](https://arxiv.org/abs/2607.11020) wrote facts sequentially into small LMs. Facts that stop being recalled after later writes still leave traces:
+- they keep most of the log-probability their write added;
 - wrong answers name recently written facts;
 - putting the full fact text back in context restores 77–80% of them.
 
-This suggests a third store state between "keep the text" and "evict": keep only a short address (a phrase, a 4-token code or a soft prompt) that re-cues the hidden copy in the weights. The text is deleted only when a delayed self-test, cued by the address, passes.
+O'Neill also reports slow relearning, which argues against the facts being merely hidden. "Hidden, not erased" is therefore this project's hypothesis, not O'Neill's conclusion.
 
-**Big-picture link.** This is the doc's open consolidation problem, at the step nobody measures: when the store can forget a fact once it is in the weights. Because old and new entries compete at retrieval ([2604.27003](https://www.emergentmind.com/papers/2604.27003)), short addresses also free up context.
+If it holds, there is a third store state between "keep the text" and "evict": keep only a short address (a phrase, a 4-token code or a soft prompt) that re-cues the copy in the weights. The text is deleted only when a delayed self-test, cued by the address, passes.
+
+**Big-picture link.** This is the doc's open consolidation problem, at the step where the store can forget a fact once it is in the weights. Dual-Layer Agentic Memory already prunes the store with a no-cue gate. What has not been tested is whether an address-only entry, checked by a delayed cued self-test, keeps more facts reachable per token of store. Because old and new entries compete at retrieval ([2604.27003](https://www.emergentmind.com/papers/2604.27003)), short addresses also free up context.
 
 **First experiment (go/no-go).**
-- Setup: Qwen2.5-0.5B, 10 episodes × 200 facts.
-- Test set: "hidden" facts, which fail with no cue but pass with the full text in context.
+- Setup: Qwen2.5-0.5B, 10 sequential fine-tuning episodes × 200 invented facts, 2 seeds.
+- Each fact is written in one of three ways, trained in alongside the fact: with no address, with a short natural-language stub, or with a random 4-token code.
+- Test set: "hidden" facts from episodes 1–3, which fail with no cue but pass with the full text in context.
 - Measure the share of the full-text gap each cue recovers:
   - the correct address;
   - a shuffled code;
@@ -184,7 +211,7 @@ This suggests a third store state between "keep the text" and "evict": keep only
 - **GO** if all hold:
   - the correct address recovers at least half the gap;
   - each control recovers 15% or less;
-  - the eviction gate has under 20% regret at a 5× smaller store.
+  - replayed offline, the eviction gate (delete the text once the delayed, cued self-test passes) has under 20% regret against the better of never evicting and evicting immediately, while shrinking the store at least 5×.
 
 **Kill if** the address recovers less than 30% of the gap, or if a control recovers within 10 points of the address. Either means the effect is generic priming, not addressing.
 
@@ -243,15 +270,16 @@ Fast-level decay or periodic downscaling (W_fast ← (1−γ)·W_fast every S st
 
 **Pilot already run (CPU, in [`pilots/cms-degeneracy/`](../pilots/cms-degeneracy/)).**
 - The lemma holds to 3e-15.
-- Under plain shared-loss CMS, the slow level's recall coefficient falls from 0.024 to 0.014 as the spacing gap grows, against 0.077 for a slow-only learner.
-- With fast-level decay of 0.97 per step, an optimum appears: 0.067 at gap 128, 2.8× the plain CMS value.
+- After a reset, plain shared-loss CMS keeps only 26–32% of a slow-only learner's recall.
+- The slow level's signal coefficient under plain CMS falls from 0.024 to 0.014 as the spacing gap grows, against 0.077 for slow-only.
+- With fast-level retention of 0.97 per step (3% decay), an interior optimum appears: 0.067 at gap 128. That is 3.5× plain CMS at the same gap (0.019), though still below slow-only (0.075).
 
 **Next.**
 - Week 1: parameter sweeps and closed forms.
 - Week 2: DeltaNet plus 2 slow MLP levels on Zoology MQAR.
 - **GO** if both hold:
   - the theory fits (R² ≥ 0.9);
-  - in the nonlinear model, plain CMS keeps ≤50% of slow-only recall after a reset, while the derived schedule gives ≥1.5×.
+  - in the nonlinear model, plain CMS keeps ≤50% of slow-only recall after a reset, while the derived schedule gives ≥1.5× plain CMS's post-reset recall.
 
 **Kill if** nonlinear CMS already keeps ≥80% of slow-only recall. The degeneracy would then be a linear artifact.
 
@@ -376,7 +404,7 @@ The buy price is a forecast, made before writing, of the KL drift the write will
 **Kill if** the forecast fails (the project becomes theory plus simulation), or if buying never pays off at small scale.
 
 **Closest work, and what is still new.**
-- [ALLOT](https://arxiv.org/abs/2609.32344) does budgeted static routing of updates to weights.
+- [ALLOT](https://arxiv.org/abs/2609.32344) appears, from its abstract, to do budgeted static routing of updates to weights. Its method section was not read and could already cover expiry or demand; the plan treats that as a kill condition.
 - [Dual-Layer](https://arxiv.org/abs/2608.22215) does write routing with periodic write-back.
 - Still new: expiring purchases, the store-size externality, and the competitive ratio against a clairvoyant schedule over time.
 
@@ -516,14 +544,14 @@ Any weight write must first be corroborated.
 
 ## Ideas considered and dropped
 
-The brainstorm produced 48 ideas. Thirteen went through prior-work checking and planning, and four more were added later for angles the first round missed. Some ideas were merged into the shortlist. Those dropped outright include:
+The brainstorm produced 48 ideas. Thirteen went through prior-work checking and planning, and four more were added later for angles the first round missed. Some ideas were merged into the shortlist. Those dropped or set aside include:
 
 | Dropped idea | Main reason |
 | --- | --- |
 | Ski-rental consolidation of agent text memory | Duplicates #9 |
 | Sharded consolidation for exact deletion | Weakest tie to the doc's lessons; Agentic Unlearning may already cover it |
 | Buffer as a write-location oracle for CLIP neuron masks | Crowded field (SPU, MIST, GNSP); weak signal from polysemantic neurons |
-| kNN store + slow head for online geolocation | Small headroom over ACM; question already covered by #9 |
+| kNN store + slow head for online geolocation (kept as a backup) | Small headroom over ACM; question already covered by #9 |
 | Rewritten replay targets as iterated self-distillation | Overlaps X-DER |
 | Token-budgeted, fidelity-allocated ViT replay | An efficiency trick rather than memory management |
 | Forward-only buffer-calibrated adapter merging | Scoop risk from adapter-merging work |
@@ -555,6 +583,7 @@ The full list of 48 is in [`data/pass1_result.json`](data/pass1_result.json), un
   - Cho et al. (2502.07274) is now titled *Forget Forgetting: Continual Learning in a World of Abundant Memory* (ICLR 2026), so the big-picture doc's Sources line may need updating.
 - **GPU-hour figures are planning estimates.**
   - The judge flagged #9, #12, #15 and #8 as optimistic.
-  - #5's 130 GPU-hours is too high, since most of it runs on CPU.
+  - The re-rank said the same of #7, which backpropagates through CUT3R at 512 resolution.
+  - #5's original 130 GPU-hour plan is too high, since most of it runs on CPU.
 - **These areas move fast.** Several 3D ideas compete with papers posted in the last three months. Post early results quickly.
 - Model names, checkpoints and API prices in the full plans should be checked before budgeting.
